@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Phone, MessageCircle, Globe, MapPin, Mail, ArrowLeft, Star, Clock, Award } from 'lucide-react'
 import type { Metadata } from 'next'
+import PhotoGallery from '@/components/PhotoGallery'
+import { getPlaceholderPhotos } from '@/lib/photos'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -153,19 +155,14 @@ export default async function BusinessPage({ params }: PageProps) {
 
         {/* Business Card */}
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          {/* Hero Image / Photo Gallery Placeholder */}
-          <div className="relative h-64 bg-gradient-to-br from-[#0066cc] to-[#004499] flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-4 left-4 w-32 h-32 bg-white rounded-full" />
-              <div className="absolute bottom-8 right-8 w-48 h-48 bg-white rounded-full" />
-              <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-white rounded-full -translate-x-1/2 -translate-y-1/2" />
-            </div>
-            <div className="relative text-center">
-              <span className="text-7xl opacity-30">🏢</span>
-              <p className="text-white/60 text-sm mt-2">Photo coming soon</p>
-            </div>
+          {/* Photo Gallery */}
+          <div className="relative">
+            <PhotoGallery 
+              photos={getPlaceholderPhotos(listing.category)} 
+              businessName={listing.name} 
+            />
             {/* Tier Badge */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-3 right-3 z-10">
               <span className={`text-xs font-bold uppercase px-3 py-1.5 rounded-full ${tier.bg} ${tier.text}`}>
                 {tier.label}
               </span>

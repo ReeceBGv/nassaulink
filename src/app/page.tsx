@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Search, Phone, MessageCircle } from 'lucide-react'
+import { getHeroPhoto } from '@/lib/photos'
 
 export default async function HomePage() {
   const supabase = createClient(
@@ -125,6 +127,17 @@ export default async function HomePage() {
                 listing.tier === 'premium' ? 'border-[#ff6b4a]' : listing.tier === 'featured' ? 'border-amber-400' : 'border-transparent'
               }`}
             >
+              {/* Card Photo */}
+              <div className="relative h-40 w-full overflow-hidden">
+                <Image
+                  src={getHeroPhoto(listing.category)}
+                  alt={listing.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 400px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+              </div>
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${

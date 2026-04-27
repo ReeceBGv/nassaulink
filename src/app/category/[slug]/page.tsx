@@ -1,8 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Phone, MessageCircle, MapPin, Star } from 'lucide-react'
 import type { Metadata } from 'next'
+import { getHeroPhoto } from '@/lib/photos'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -122,6 +124,17 @@ export default async function CategoryPage({ params }: PageProps) {
                   href={`/business/${listing.slug}`}
                   className={`block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border-2 ${tier.border}`}
                 >
+                  {/* Card Photo */}
+                  <div className="relative h-40 w-full overflow-hidden">
+                    <Image
+                      src={getHeroPhoto(listing.category)}
+                      alt={listing.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 400px"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                  </div>
                   <div className="p-5">
                     <div className="flex items-center gap-2 mb-3">
                       <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
