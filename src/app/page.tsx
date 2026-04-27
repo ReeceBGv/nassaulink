@@ -109,7 +109,7 @@ export default async function HomePage() {
       <section className="py-8 max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-[#1a1a2e]">Featured Listings</h2>
-          <Link href="/listings" className="text-[#0066cc] font-semibold text-sm hover:underline">See all →</Link>
+          <Link href="/categories" className="text-[#0066cc] font-semibold text-sm hover:underline">Browse all →</Link>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {(listings || []).map((listing) => (
