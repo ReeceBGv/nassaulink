@@ -333,7 +333,6 @@ export default async function BusinessPage({ params }: PageProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs bg-[#25d366] text-white px-3 py-1.5 rounded-lg font-medium"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         WhatsApp
                       </a>
@@ -341,7 +340,6 @@ export default async function BusinessPage({ params }: PageProps) {
                     <a
                       href={`tel:${item.phone}`}
                       className="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg font-medium"
-                      onClick={(e) => e.stopPropagation()}
                     >
                       Call
                     </a>

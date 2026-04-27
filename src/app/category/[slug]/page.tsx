@@ -168,7 +168,6 @@ export default async function CategoryPage({ params }: PageProps) {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex-1 bg-[#25d366] hover:bg-[#128c7e] text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
                         >
                           <MessageCircle size={16} />
                           WhatsApp
@@ -177,7 +176,6 @@ export default async function CategoryPage({ params }: PageProps) {
                       <a
                         href={`tel:${listing.phone}`}
                         className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         <Phone size={16} />
                       </a>
