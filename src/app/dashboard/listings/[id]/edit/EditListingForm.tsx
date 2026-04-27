@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import PhotoUpload from '@/components/PhotoUpload'
 
 const categories = [
   'Pool Services',
@@ -24,6 +25,7 @@ interface Listing {
   phone: string
   whatsapp: string
   tier: string
+  photos?: string[]
 }
 
 export default function EditListingForm({ listing }: { listing: Listing }) {
@@ -39,6 +41,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
     whatsapp: listing.whatsapp || '',
     tier: listing.tier,
   })
+  const [photos, setPhotos] = useState<string[]>(listing.photos || [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -58,6 +61,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
         phone: form.phone,
         whatsapp: form.whatsapp || form.phone,
         tier: form.tier,
+        photos: photos,
       })
       .eq('id', listing.id)
 
@@ -143,6 +147,14 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
         {error && (
           <div className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">{error}</div>
         )}
+
+        <div className="pt-4 border-t border-gray-100">
+          <PhotoUpload
+            listingId={listing.id}
+            existingPhotos={listing.photos || []}
+            onPhotosChange={setPhotos}
+          />
+        </div>
 
         <div className="flex gap-3 pt-2">
           <button

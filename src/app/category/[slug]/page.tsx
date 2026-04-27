@@ -127,7 +127,7 @@ export default async function CategoryPage({ params }: PageProps) {
                   {/* Card Photo */}
                   <div className="relative h-40 w-full overflow-hidden">
                     <Image
-                      src={getHeroPhoto(listing.category)}
+                      src={listing.photos?.[0] || getHeroPhoto(listing.category)}
                       alt={listing.name}
                       fill
                       className="object-cover"

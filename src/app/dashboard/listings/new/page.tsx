@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import PhotoUpload from '@/components/PhotoUpload'
 
 const categories = [
   'Pool Services',
@@ -35,6 +36,7 @@ export default function NewListingPage() {
     whatsapp: '',
     tier: 'free',
   })
+  const [photos, setPhotos] = useState<string[]>([])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -62,6 +64,7 @@ export default function NewListingPage() {
       whatsapp: form.whatsapp || form.phone,
       tier: form.tier,
       status: 'pending',
+      photos: photos,
     })
 
     if (insertError) {
@@ -166,6 +169,12 @@ export default function NewListingPage() {
             ))}
           </div>
         </div>
+
+        {/* Photo Upload */}
+        <PhotoUpload
+          listingId="new"
+          onPhotosChange={setPhotos}
+        />
 
         {error && (
           <div className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">{error}</div>

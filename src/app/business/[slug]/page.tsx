@@ -158,7 +158,7 @@ export default async function BusinessPage({ params }: PageProps) {
           {/* Photo Gallery */}
           <div className="relative">
             <PhotoGallery 
-              photos={getPlaceholderPhotos(listing.category)} 
+              photos={listing.photos?.length > 0 ? listing.photos : getPlaceholderPhotos(listing.category)} 
               businessName={listing.name} 
             />
             {/* Tier Badge */}
