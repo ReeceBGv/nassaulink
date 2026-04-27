@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Phone, MessageCircle, Globe, MapPin, Mail, ArrowLeft } from 'lucide-react'
@@ -9,7 +9,10 @@ interface PageProps {
 
 export default async function BusinessPage({ params }: PageProps) {
   const { slug } = await params
-  const supabase = await createClient()
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   const { data: listing } = await supabase
     .from('listings')
