@@ -13,6 +13,7 @@ export default async function HomePage() {
     .select('*')
     .eq('status', 'approved')
     .order('tier', { ascending: false })
+    .limit(6)
 
   const { data: categories } = await supabase
     .from('categories')
