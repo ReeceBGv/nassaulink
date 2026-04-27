@@ -13,15 +13,19 @@ export default async function HomePage() {
     .select('*')
     .eq('status', 'approved')
     .order('tier', { ascending: false })
-    .limit(6)
 
   const { data: categories } = await supabase
     .from('categories')
     .select('*')
     .order('name')
 
+  const { count: totalListings } = await supabase
+    .from('listings')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'approved')
+
   const stats = {
-    listings: listings?.length || 0,
+    listings: totalListings || 0,
     categories: categories?.length || 0,
   }
 
