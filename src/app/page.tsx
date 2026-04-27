@@ -110,9 +110,10 @@ export default async function HomePage() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {(listings || []).map((listing) => (
-            <div
+            <Link
               key={listing.id}
-              className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border-2 ${
+              href={`/business/${listing.slug}`}
+              className={`block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border-2 ${
                 listing.tier === 'premium' ? 'border-[#ff6b4a]' : listing.tier === 'featured' ? 'border-amber-400' : 'border-transparent'
               }`}
             >
@@ -136,6 +137,7 @@ export default async function HomePage() {
                     href={`https://wa.me/${listing.whatsapp?.replace(/\D/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="flex-1 bg-[#25d366] hover:bg-[#128c7e] text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
                   >
                     <MessageCircle size={16} />
@@ -143,13 +145,14 @@ export default async function HomePage() {
                   </a>
                   <a
                     href={`tel:${listing.phone}`}
+                    onClick={(e) => e.stopPropagation()}
                     className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
                   >
                     <Phone size={16} />
                   </a>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

@@ -1,0 +1,212 @@
+import { createClient } from '@/lib/supabase/server'
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { Phone, MessageCircle, Globe, MapPin, Mail, ArrowLeft } from 'lucide-react'
+
+interface PageProps {
+  params: Promise<{ slug: string }>
+}
+
+export default async function BusinessPage({ params }: PageProps) {
+  const { slug } = await params
+  const supabase = await createClient()
+
+  const { data: listing } = await supabase
+    .from('listings')
+    .select('*')
+    .eq('slug', slug)
+    .eq('status', 'approved')
+    .single()
+
+  if (!listing) {
+    notFound()
+  }
+
+  // Schema.org LocalBusiness JSON-LD
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: listing.name,
+    description: listing.description,
+    telephone: listing.phone,
+    ...(listing.whatsapp && { 'contactPoint': {
+      '@type': 'ContactPoint',
+      contactType: 'WhatsApp',
+      telephone: listing.whatsapp,
+      availableLanguage: 'English'
+    }}),
+    ...(listing.email && { email: listing.email }),
+    ...(listing.website && { url: listing.website }),
+    ...(listing.address && { address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Nassau',
+      addressRegion: 'New Providence',
+      addressCountry: 'BS',
+      streetAddress: listing.address
+    }}),
+    areaServed: {
+      '@type': 'City',
+      name: 'Nassau',
+      containedInPlace: {
+        '@type': 'Country',
+        name: 'The Bahamas'
+      }
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f5f0e8]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+
+      {/* Header */}
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <nav className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
+            <span className="w-8 h-8 bg-[#0066cc] rounded-lg flex items-center justify-center text-white text-sm">🏝️</span>
+            NassauLink
+          </Link>
+          <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#0066cc] flex items-center gap-1 transition-colors">
+            <ArrowLeft size={16} />
+            Back to Home
+          </Link>
+        </nav>
+      </header>
+
+      <main className="max-w-4xl mx-auto px-6 py-10">
+        {/* Breadcrumb */}
+        <nav className="text-sm text-gray-500 mb-6">
+          <Link href="/" className="hover:text-[#0066cc]">Home</Link>
+          <span className="mx-2">/</span>
+          <Link href={`/category/${listing.category.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-[#0066cc]">
+            {listing.category}
+          </Link>
+          <span className="mx-2">/</span>
+          <span className="text-gray-800 font-medium">{listing.name}</span>
+        </nav>
+
+        {/* Business Card */}
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          {/* Hero Image Placeholder */}
+          <div className="h-48 bg-gradient-to-br from-[#0066cc] to-[#004499] flex items-center justify-center">
+            <span className="text-6xl opacity-20">🏢</span>
+          </div>
+
+          <div className="p-8">
+            {/* Badges */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${
+                listing.tier === 'premium' ? 'bg-red-100 text-red-700' :
+                listing.tier === 'featured' ? 'bg-amber-100 text-amber-700' :
+                'bg-gray-100 text-gray-600'
+              }`}>
+                {listing.tier}
+              </span>
+              <span className="text-xs font-medium text-[#0066cc] bg-blue-50 px-2.5 py-1 rounded-full">
+                {listing.category}
+              </span>
+              <span className="text-xs font-medium text-green-700 bg-green-50 px-2.5 py-1 rounded-full flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                Verified
+              </span>
+            </div>
+
+            <h1 className="text-3xl font-extrabold text-[#1a1a2e] mb-3">{listing.name}</h1>
+            <p className="text-gray-600 text-lg leading-relaxed mb-8">{listing.description}</p>
+
+            {/* Contact Actions */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              <a
+                href={`tel:${listing.phone}`}
+                className="flex items-center justify-center gap-2 bg-[#0066cc] hover:bg-[#004499] text-white font-semibold py-3.5 rounded-xl transition-colors"
+              >
+                <Phone size={18} />
+                Call Now
+              </a>
+              {listing.whatsapp && (
+                <a
+                  href={`https://wa.me/${listing.whatsapp.replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 bg-[#25d366] hover:bg-[#128c7e] text-white font-semibold py-3.5 rounded-xl transition-colors"
+                >
+                  <MessageCircle size={18} />
+                  WhatsApp
+                </a>
+              )}
+            </div>
+
+            {/* Contact Details */}
+            <div className="border-t border-gray-100 pt-6 space-y-3">
+              <h3 className="font-bold text-[#1a1a2e] mb-4">Contact Information</h3>
+              
+              <div className="flex items-center gap-3 text-gray-600">
+                <Phone size={18} className="text-[#0066cc] shrink-0" />
+                <a href={`tel:${listing.phone}`} className="hover:text-[#0066cc] transition-colors">
+                  {listing.phone}
+                </a>
+              </div>
+
+              {listing.whatsapp && (
+                <div className="flex items-center gap-3 text-gray-600">
+                  <MessageCircle size={18} className="text-[#25d366] shrink-0" />
+                  <a 
+                    href={`https://wa.me/${listing.whatsapp.replace(/\D/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#25d366] transition-colors"
+                  >
+                    {listing.whatsapp}
+                  </a>
+                </div>
+              )}
+
+              {listing.email && (
+                <div className="flex items-center gap-3 text-gray-600">
+                  <Mail size={18} className="text-gray-400 shrink-0" />
+                  <a href={`mailto:${listing.email}`} className="hover:text-[#0066cc] transition-colors">
+                    {listing.email}
+                  </a>
+                </div>
+              )}
+
+              {listing.website && (
+                <div className="flex items-center gap-3 text-gray-600">
+                  <Globe size={18} className="text-gray-400 shrink-0" />
+                  <a 
+                    href={listing.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#0066cc] transition-colors"
+                  >
+                    {listing.website.replace(/^https?:\/\//, '')}
+                  </a>
+                </div>
+              )}
+
+              {listing.address && (
+                <div className="flex items-center gap-3 text-gray-600">
+                  <MapPin size={18} className="text-gray-400 shrink-0" />
+                  <span>{listing.address}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Related Listings Placeholder */}
+        <div className="mt-10">
+          <h2 className="text-xl font-bold text-[#1a1a2e] mb-4">More in {listing.category}</h2>
+          <p className="text-gray-500 text-sm">Related listings coming soon.</p>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-100 py-10 text-center text-gray-500 text-sm mt-20">
+        <p>© 2026 NassauLink. Built for The Bahamas. 🇧🇸</p>
+      </footer>
+    </div>
+  )
+}
