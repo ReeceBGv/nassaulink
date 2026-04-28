@@ -1,12 +1,14 @@
-// Default fallback images (used when DB has no image_url AND no hardcoded match)
+// Category-matched Unsplash placeholder images
+// Expanded coverage with normalized lookup — case-insensitive, slug-aware
+// Also serves as fallback when DB category.image_url is null
+
 const defaultPhotos = [
   'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
   'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
   'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80',
 ]
 
-// Hardcoded fallback map for categories not yet in DB or when DB is unreachable
-const fallbackPhotos: Record<string, string[]> = {
+const unsplashPhotos: Record<string, string[]> = {
   'Pool Services': [
     'https://images.unsplash.com/photo-1572331165267-854da2b10ccc?w=800&q=80',
     'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80',
@@ -159,13 +161,45 @@ const fallbackPhotos: Record<string, string[]> = {
   ],
 }
 
+/**
+ * Normalize a category string for lookup.
+ * Handles case-insensitive matching and common slug→name variations.
+ */
+function normalizeCategory(category: string): string {
+  const normalized = category.trim().toLowerCase()
+
+  // Direct match
+  const direct = Object.keys(unsplashPhotos).find(
+    (key) => key.toLowerCase() === normalized
+  )
+  if (direct) return direct
+
+  // Slug-style match (replace hyphens with spaces)
+  const slugStyle = normalized.replace(/-/g, ' ')
+  const slugMatch = Object.keys(unsplashPhotos).find(
+    (key) => key.toLowerCase() === slugStyle
+  )
+  if (slugMatch) return slugMatch
+
+  // Partial/fuzzy match: if the input contains a known key or vice versa
+  for (const key of Object.keys(unsplashPhotos)) {
+    const keyLower = key.toLowerCase()
+    if (normalized.includes(keyLower) || keyLower.includes(normalized)) {
+      return key
+    }
+  }
+
+  return category // return original if no match
+}
+
 /** Return multiple placeholder images for a gallery.
  *  Priority: 1) DB category.image_url, 2) hardcoded fallback map, 3) generic defaults */
 export function getPlaceholderPhotos(category: string, count: number = 3, categoryImageUrl?: string | null): string[] {
   if (categoryImageUrl) {
     return [categoryImageUrl, ...defaultPhotos].slice(0, count)
   }
-  const photos = fallbackPhotos[category] || defaultPhotos
+  const normalized = normalizeCategory(category)
+  const photos = unsplashPhotos[normalized] || defaultPhotos
   return photos.slice(0, count)
 }
 
@@ -175,6 +209,7 @@ export function getHeroPhoto(category: string, categoryImageUrl?: string | null)
   if (categoryImageUrl) {
     return categoryImageUrl
   }
-  const photos = fallbackPhotos[category] || defaultPhotos
+  const normalized = normalizeCategory(category)
+  const photos = unsplashPhotos[normalized] || defaultPhotos
   return photos[0]
 }

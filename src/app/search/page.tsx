@@ -54,8 +54,13 @@ export default async function SearchPage({ searchParams }: PageProps) {
   // Get categories for filter
   const { data: categories } = await supabase
     .from('categories')
-    .select('name, slug')
+    .select('name, slug, image_url')
     .order('name')
+
+  // Build a lookup map: category name → image_url for fast fallback
+  const categoryImageMap = new Map(
+    (categories || []).map((c) => [c.name, c.image_url])
+  )
 
   const tierConfig = {
     spotlight: { border: 'border-purple-400', badge: 'bg-purple-100 text-purple-700', label: 'Spotlight' },

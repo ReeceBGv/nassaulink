@@ -27,6 +27,11 @@ export default async function HomePage() {
     .select('id, name, slug, icon, description, image_url')
     .order('name')
 
+  // Build a lookup map: category name → image_url for fast fallback
+  const categoryImageMap = new Map(
+    (categories || []).map((c) => [c.name, c.image_url])
+  )
+
   const { count: totalListings } = await supabase
     .from('listings')
     .select('*', { count: 'exact', head: true })

@@ -7,13 +7,21 @@ import Image from 'next/image'
 interface PhotoGalleryProps {
   photos: string[]
   businessName: string
+  categoryImage?: string
 }
 
-export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps) {
+export default function PhotoGallery({ photos, businessName, categoryImage }: PhotoGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
 
-  if (!photos || photos.length === 0) {
+  // Merge uploaded photos with category fallback image
+  const displayPhotos = photos?.length > 0 
+    ? photos 
+    : categoryImage 
+      ? [categoryImage] 
+      : []
+
+  if (!displayPhotos || displayPhotos.length === 0) {
     return (
       <div className="relative h-64 bg-gradient-to-br from-[#0066cc] to-[#004499] flex items-center justify-center overflow-hidden rounded-2xl">
         <div className="absolute inset-0 opacity-10">
@@ -30,11 +38,11 @@ export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps
   }
 
   const nextPhoto = () => {
-    setCurrentIndex((prev) => (prev + 1) % photos.length)
+    setCurrentIndex((prev) => (prev + 1) % displayPhotos.length)
   }
 
   const prevPhoto = () => {
-    setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length)
+    setCurrentIndex((prev) => (prev - 1 + displayPhotos.length) % displayPhotos.length)
   }
 
   return (
@@ -45,7 +53,7 @@ export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps
         onClick={() => setLightboxOpen(true)}
       >
         <Image
-          src={photos[currentIndex]}
+          src={displayPhotos[currentIndex]}
           alt={`${businessName} - Photo ${currentIndex + 1}`}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -55,7 +63,7 @@ export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
         
         {/* Navigation Arrows (only if multiple photos) */}
-        {photos.length > 1 && (
+        {displayPhotos.length > 1 && (
           <>
             <button
               onClick={(e) => { e.stopPropagation(); prevPhoto() }}
@@ -70,7 +78,7 @@ export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps
               <ChevronRight size={20} className="text-gray-700" />
             </button>
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-              {photos.map((_, i) => (
+              {displayPhotos.map((_, i) => (
                 <button
                   key={i}
                   onClick={(e) => { e.stopPropagation(); setCurrentIndex(i) }}
@@ -84,17 +92,17 @@ export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps
         )}
 
         {/* Photo Counter */}
-        {photos.length > 1 && (
+        {displayPhotos.length > 1 && (
           <div className="absolute top-3 right-3 bg-black/50 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
-            {currentIndex + 1} / {photos.length}
+            {currentIndex + 1} / {displayPhotos.length}
           </div>
         )}
       </div>
 
       {/* Thumbnail Strip */}
-      {photos.length > 1 && (
+      {displayPhotos.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-1">
-          {photos.map((photo, i) => (
+          {displayPhotos.map((photo, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
@@ -129,7 +137,7 @@ export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps
             <X size={24} />
           </button>
           
-          {photos.length > 1 && (
+          {displayPhotos.length > 1 && (
             <>
               <button
                 onClick={(e) => { e.stopPropagation(); prevPhoto() }}
@@ -148,7 +156,7 @@ export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps
           
           <div className="relative w-full h-full max-w-5xl max-h-[85vh] mx-4 my-8">
             <Image
-              src={photos[currentIndex]}
+              src={displayPhotos[currentIndex]}
               alt={`${businessName} - Photo ${currentIndex + 1}`}
               fill
               className="object-contain"
@@ -158,7 +166,7 @@ export default function PhotoGallery({ photos, businessName }: PhotoGalleryProps
           </div>
           
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-sm">
-            {currentIndex + 1} / {photos.length} — {businessName}
+            {currentIndex + 1} / {displayPhotos.length} — {businessName}
           </div>
         </div>
       )}
