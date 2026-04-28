@@ -36,7 +36,16 @@ const categoryIcons: Record<string, string> = {
   'bakery': '🥐',
 }
 
-const categoryColors: Record<string, { bg: string; hover: string; text: string }> = {
+const categoryDescriptions: Record<string, string> = {
+  'pool-services': 'Pool cleaning, maintenance, and repair services',
+  'ac-cooling': 'Air conditioning installation and repair',
+  'landscaping': 'Lawn care, gardening, and outdoor services',
+  'auto-repair': 'Car repair, maintenance, and auto shops',
+  'marine-services': 'Boat repair, yacht services, and marine supplies',
+  'trades-repairs': 'Plumbing, electrical, and handyman services',
+  'catering': 'Event catering and food services',
+  'home-services': 'Cleaning, security, and home maintenance',
+}
   'pool-services': { bg: 'bg-blue-50', hover: 'hover:bg-blue-100', text: 'text-blue-600' },
   'ac-cooling': { bg: 'bg-cyan-50', hover: 'hover:bg-cyan-100', text: 'text-cyan-600' },
   'landscaping': { bg: 'bg-green-50', hover: 'hover:bg-green-100', text: 'text-green-600' },
@@ -59,6 +68,19 @@ export default async function CategoriesPage() {
     .from('categories')
     .select('*')
     .order('name')
+
+  // Get actual listing counts per category
+  const { data: listings } = await supabase
+    .from('listings')
+    .select('category')
+    .eq('status', 'approved')
+
+  const countMap: Record<string, number> = {}
+  if (listings) {
+    for (const listing of listings) {
+      countMap[listing.category] = (countMap[listing.category] || 0) + 1
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
@@ -117,7 +139,8 @@ export default async function CategoriesPage() {
                   {icon}
                 </div>
                 <h3 className="font-bold text-[#1a1a2e] mb-1 group-hover:text-[#0066cc] transition-colors">{cat.name}</h3>
-                <p className="text-sm text-gray-500">{cat.listing_count} {cat.listing_count === 1 ? 'listing' : 'listings'}</p>
+                <p className="text-sm text-gray-400 mb-2">{categoryDescriptions[cat.slug] || cat.description || 'Local businesses in Nassau'}</p>
+                <p className="text-sm text-gray-500">{countMap[cat.name] || 0} {countMap[cat.name] === 1 ? 'listing' : 'listings'}</p>
                 <div className="mt-4 flex items-center text-sm font-medium text-[#0066cc] opacity-0 group-hover:opacity-100 transition-opacity">
                   Browse →
                 </div>

@@ -96,19 +96,22 @@ export default async function HomePage() {
           <Link href="/categories" className="text-[#0066cc] font-semibold text-sm hover:underline">View all →</Link>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {(categories || []).map((cat) => (
-            <Link
-              key={cat.id}
-              href={`/category/${cat.slug}`}
-              className="bg-white rounded-xl p-5 shadow-sm border border-transparent hover:border-[#0066cc] hover:shadow-md transition-all group"
-            >
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-3 bg-gray-50 group-hover:bg-blue-50 transition-colors">
-                {cat.icon}
-              </div>
-              <h3 className="font-semibold text-[#1a1a2e]">{cat.name}</h3>
-              <p className="text-sm text-gray-500">{cat.listing_count} listings</p>
-            </Link>
-          ))}
+          {(categories || []).map((cat) => {
+            const catCount = listings?.filter(l => l.category === cat.name).length || 0
+            return (
+              <Link
+                key={cat.id}
+                href={`/category/${cat.slug}`}
+                className="bg-white rounded-xl p-5 shadow-sm border border-transparent hover:border-[#0066cc] hover:shadow-md transition-all group"
+              >
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-3 bg-gray-50 group-hover:bg-blue-50 transition-colors">
+                  {cat.icon}
+                </div>
+                <h3 className="font-semibold text-[#1a1a2e]">{cat.name}</h3>
+                <p className="text-sm text-gray-500">{catCount} {catCount === 1 ? 'listing' : 'listings'}</p>
+              </Link>
+            )
+          })}
         </div>
       </section>
 
