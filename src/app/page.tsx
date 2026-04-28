@@ -66,17 +66,18 @@ export default async function HomePage() {
           <p className="text-lg text-blue-100 mb-8 max-w-xl mx-auto">
             The only directory built for how Bahamians actually find local businesses — click, chat, done.
           </p>
-          <div className="bg-white rounded-2xl p-2 shadow-xl flex gap-2 max-w-xl mx-auto">
+          <form action="/search" method="GET" className="bg-white rounded-2xl p-2 shadow-xl flex gap-2 max-w-xl mx-auto">
             <input
               type="text"
+              name="q"
               placeholder="Search for plumbers, caterers, auto shops..."
               className="flex-1 px-4 py-3 rounded-xl bg-gray-50 border-0 outline-none text-gray-800 placeholder-gray-400"
             />
-            <button className="bg-[#ff6b4a] hover:bg-[#e55a3a] text-white font-semibold px-6 py-3 rounded-xl transition-colors flex items-center gap-2">
+            <button type="submit" className="bg-[#ff6b4a] hover:bg-[#e55a3a] text-white font-semibold px-6 py-3 rounded-xl transition-colors flex items-center gap-2">
               <Search size={18} />
               Search
             </button>
-          </div>
+          </form>
           <div className="flex justify-center gap-12 mt-10">
             <div className="text-center">
               <span className="text-3xl font-bold">{stats.listings}</span>

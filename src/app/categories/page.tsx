@@ -112,18 +112,25 @@ export default async function CategoriesPage() {
         </div>
 
         {/* Search Bar */}
-        <div className="max-w-xl mx-auto mb-12">
+        <form action="/search" method="GET" className="max-w-xl mx-auto mb-12">
           <div className="bg-white rounded-2xl p-2 shadow-sm flex gap-2 border border-gray-100">
             <div className="flex items-center pl-3 text-gray-400">
               <Search size={18} />
             </div>
             <input
               type="text"
+              name="q"
               placeholder="Search categories..."
               className="flex-1 px-2 py-3 rounded-xl bg-transparent border-0 outline-none text-gray-800 placeholder-gray-400"
             />
+            <button
+              type="submit"
+              className="bg-[#0066cc] hover:bg-[#004499] text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
+            >
+              Search
+            </button>
           </div>
-        </div>
+        </form>
 
         {/* Category Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
