@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Upload, X, Camera } from 'lucide-react'
+import { Upload, X } from 'lucide-react'
 import Image from 'next/image'
 
 interface PhotoUploadProps {
@@ -21,13 +21,21 @@ export default function PhotoUpload({ listingId, existingPhotos = [], onPhotosCh
     const files = e.target.files
     if (!files || files.length === 0) return
 
+    // Enforce max 5 photos total
+    const remainingSlots = 5 - photos.length
+    const filesToUpload = Array.from(files).slice(0, remainingSlots)
+    if (filesToUpload.length === 0) {
+      setError('Maximum 5 photos allowed. Remove some first.')
+      return
+    }
+
     setUploading(true)
     setError('')
 
     const supabase = createClient()
     const newPhotos: string[] = []
 
-    for (const file of Array.from(files)) {
+    for (const file of filesToUpload) {
       // Validate file
       if (!file.type.startsWith('image/')) {
         setError('Please upload only image files')

@@ -43,7 +43,7 @@ export default async function CategoryPage({ params }: PageProps) {
   // Get category info
   const { data: category } = await supabase
     .from('categories')
-    .select('*')
+    .select('id, name, slug, icon, image_url, description')
     .eq('slug', slug)
     .single()
 
@@ -127,7 +127,7 @@ export default async function CategoryPage({ params }: PageProps) {
                   {/* Card Photo */}
                   <div className="relative h-40 w-full overflow-hidden">
                     <Image
-                      src={listing.photos?.[0] || getHeroPhoto(listing.category)}
+                      src={listing.photos?.[0] || category.image_url || getHeroPhoto(listing.category)}
                       alt={listing.name}
                       fill
                       className="object-cover"

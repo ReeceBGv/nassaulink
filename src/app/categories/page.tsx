@@ -2,62 +2,6 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { ArrowLeft, Search } from 'lucide-react'
 
-// Category icon mapping
-const categoryIcons: Record<string, string> = {
-  'pool-services': '🏊',
-  'ac-cooling': '❄️',
-  'landscaping': '🌴',
-  'auto-repair': '🚗',
-  'marine-services': '⚓',
-  'trades-repairs': '🔧',
-  'catering': '🍽️',
-  'home-services': '🏠',
-  'restaurant': '🍴',
-  'bar': '🍹',
-  'spa': '💆',
-  'pharmacy': '💊',
-  'grocery': '🛒',
-  'boating': '🛥️',
-  'cafe': '☕',
-  'car-rental': '🚙',
-  'gym': '💪',
-  'tourism': '🏖️',
-  'dentist': '🦷',
-  'liquor-store': '🍾',
-  'veterinary': '🐕',
-  'real-estate': '🏘️',
-  'hardware': '🔨',
-  'laundry': '👕',
-  'it-services': '💻',
-  'beauty-salon': '💅',
-  'courier': '📦',
-  'marina': '⛵',
-  'printing': '🖨️',
-  'bakery': '🥐',
-}
-
-const categoryDescriptions: Record<string, string> = {
-  'pool-services': 'Pool cleaning, maintenance, and repair services',
-  'ac-cooling': 'Air conditioning installation and repair',
-  'landscaping': 'Lawn care, gardening, and outdoor services',
-  'auto-repair': 'Car repair, maintenance, and auto shops',
-  'marine-services': 'Boat repair, yacht services, and marine supplies',
-  'trades-repairs': 'Plumbing, electrical, and handyman services',
-  'catering': 'Event catering and food services',
-  'home-services': 'Cleaning, security, and home maintenance',
-}
-
-const categoryColors: Record<string, { bg: string; hover: string; text: string }> = {
-  'pool-services': { bg: 'bg-blue-50', hover: 'hover:bg-blue-100', text: 'text-blue-600' },
-  'ac-cooling': { bg: 'bg-cyan-50', hover: 'hover:bg-cyan-100', text: 'text-cyan-600' },
-  'landscaping': { bg: 'bg-green-50', hover: 'hover:bg-green-100', text: 'text-green-600' },
-  'auto-repair': { bg: 'bg-red-50', hover: 'hover:bg-red-100', text: 'text-red-600' },
-  'marine-services': { bg: 'bg-indigo-50', hover: 'hover:bg-indigo-100', text: 'text-indigo-600' },
-  'trades-repairs': { bg: 'bg-orange-50', hover: 'hover:bg-orange-100', text: 'text-orange-600' },
-  'catering': { bg: 'bg-amber-50', hover: 'hover:bg-amber-100', text: 'text-amber-600' },
-  'home-services': { bg: 'bg-teal-50', hover: 'hover:bg-teal-100', text: 'text-teal-600' },
-}
-
 export const metadata = {
   title: 'Browse Categories | NassauLink',
   description: 'Browse all business categories in Nassau and across The Bahamas.',
@@ -68,7 +12,7 @@ export default async function CategoriesPage() {
 
   const { data: categories } = await supabase
     .from('categories')
-    .select('*')
+    .select('id, name, slug, icon, image_url, description')
     .order('name')
 
   // Get actual listing counts per category
@@ -135,23 +79,35 @@ export default async function CategoriesPage() {
         {/* Category Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {(categories || []).map((cat) => {
-            const colors = categoryColors[cat.slug] || { bg: 'bg-gray-50', hover: 'hover:bg-gray-100', text: 'text-gray-600' }
-            const icon = categoryIcons[cat.slug] || '🏢'
+            const icon = cat.icon || '🏢'
 
             return (
               <Link
                 key={cat.id}
                 href={`/category/${cat.slug}`}
-                className={`group bg-white rounded-2xl p-6 shadow-sm border border-transparent hover:border-[#0066cc] hover:shadow-lg transition-all ${colors.hover}`}
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-transparent hover:border-[#0066cc] hover:shadow-lg transition-all"
               >
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-4 ${colors.bg} transition-colors`}>
-                  {icon}
-                </div>
-                <h3 className="font-bold text-[#1a1a2e] mb-1 group-hover:text-[#0066cc] transition-colors">{cat.name}</h3>
-                <p className="text-sm text-gray-400 mb-2">{categoryDescriptions[cat.slug] || cat.description || 'Local businesses in Nassau'}</p>
-                <p className="text-sm text-gray-500">{countMap[cat.name] || 0} {countMap[cat.name] === 1 ? 'listing' : 'listings'}</p>
-                <div className="mt-4 flex items-center text-sm font-medium text-[#0066cc] opacity-0 group-hover:opacity-100 transition-opacity">
-                  Browse →
+                {/* Category Image */}
+                {cat.image_url && (
+                  <div className="relative h-32 w-full overflow-hidden">
+                    <img
+                      src={cat.image_url}
+                      alt={cat.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    <div className="absolute bottom-2 left-3 text-white text-2xl">
+                      {icon}
+                    </div>
+                  </div>
+                )}
+                <div className="p-5">
+                  <h3 className="font-bold text-[#1a1a2e] mb-1 group-hover:text-[#0066cc] transition-colors">{cat.name}</h3>
+                  <p className="text-sm text-gray-400 mb-2">{cat.description || 'Local businesses in Nassau'}</p>
+                  <p className="text-sm text-gray-500">{countMap[cat.name] || 0} {countMap[cat.name] === 1 ? 'listing' : 'listings'}</p>
+                  <div className="mt-4 flex items-center text-sm font-medium text-[#0066cc] opacity-0 group-hover:opacity-100 transition-opacity">
+                    Browse →
+                  </div>
                 </div>
               </Link>
             )

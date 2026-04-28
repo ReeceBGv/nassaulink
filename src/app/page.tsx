@@ -24,8 +24,13 @@ export default async function HomePage() {
 
   const { data: categories } = await supabase
     .from('categories')
-    .select('*')
+    .select('id, name, slug, icon, image_url')
     .order('name')
+
+  // Build a lookup map: category name → image_url for fast fallback
+  const categoryImageMap = new Map(
+    (categories || []).map((c) => [c.name, c.image_url])
+  )
 
   const { count: totalListings } = await supabase
     .from('listings')
@@ -139,7 +144,7 @@ export default async function HomePage() {
               {/* Card Photo */}
               <div className="relative h-40 w-full overflow-hidden">
                 <Image
-                  src={listing.photos?.[0] || getHeroPhoto(listing.category)}
+                  src={listing.photos?.[0] || categoryImageMap.get(listing.category) || getHeroPhoto(listing.category)}
                   alt={listing.name}
                   fill
                   className="object-cover"

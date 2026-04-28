@@ -50,10 +50,19 @@ export default async function BusinessPage({ params }: PageProps) {
 
   const { data: listing } = await supabase
     .from('listings')
-    .select('*')
+    .select('*, categories!inner(image_url)')
     .eq('slug', slug)
     .eq('status', 'approved')
     .single()
+
+  // Also fetch the category image_url separately for fallback
+  const { data: categoryRow } = await supabase
+    .from('categories')
+    .select('image_url')
+    .eq('name', listing?.category || '')
+    .single()
+
+  const categoryImageUrl = categoryRow?.image_url
 
   if (!listing) {
     notFound()
@@ -159,7 +168,8 @@ export default async function BusinessPage({ params }: PageProps) {
           <div className="relative">
             <PhotoGallery 
               photos={listing.photos?.length > 0 ? listing.photos : getPlaceholderPhotos(listing.category)} 
-              businessName={listing.name} 
+              businessName={listing.name}
+              categoryImage={categoryImageUrl}
             />
             {/* Tier Badge */}
             <div className="absolute top-3 right-3 z-10">

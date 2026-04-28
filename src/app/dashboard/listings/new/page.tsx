@@ -15,6 +15,28 @@ const categories = [
   'Trades & Repairs',
   'Catering',
   'Home Services',
+  'Restaurants',
+  'Bars & Nightlife',
+  'Spa & Wellness',
+  'Pharmacy',
+  'Grocery & Markets',
+  'Boating',
+  'Cafes',
+  'Car Rental',
+  'Gym & Fitness',
+  'Tourism',
+  'Dental',
+  'Liquor Store',
+  'Veterinary',
+  'Real Estate',
+  'Hardware',
+  'Laundry',
+  'IT Services',
+  'Beauty Salon',
+  'Courier & Delivery',
+  'Marina',
+  'Printing',
+  'Bakery',
 ]
 
 const tiers = [
@@ -54,23 +76,64 @@ export default function NewListingPage() {
 
     const slug = form.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 
-    const { error: insertError } = await supabase.from('listings').insert({
-      owner_id: user.id,
-      name: form.name,
-      slug,
-      category: form.category,
-      description: form.description,
-      phone: form.phone,
-      whatsapp: form.whatsapp || form.phone,
-      tier: form.tier,
-      status: 'pending',
-      photos: photos,
-    })
+    // Insert listing first to get real ID
+    const { data: newListing, error: insertError } = await supabase
+      .from('listings')
+      .insert({
+        owner_id: user.id,
+        name: form.name,
+        slug,
+        category: form.category,
+        description: form.description,
+        phone: form.phone,
+        whatsapp: form.whatsapp || form.phone,
+        tier: form.tier,
+        status: 'pending',
+        photos: [],
+      })
+      .select('id')
+      .single()
 
-    if (insertError) {
-      setError(insertError.message)
+    if (insertError || !newListing) {
+      setError(insertError?.message || 'Failed to create listing')
       setLoading(false)
       return
+    }
+
+    // If photos were uploaded with temp "new" prefix, move them to real listing ID
+    const realId = newListing.id
+    if (photos.length > 0) {
+      const movedPhotos: string[] = []
+      for (const url of photos) {
+        if (url.includes('/business-photos/new/')) {
+          const oldPath = url.split('/business-photos/').pop() || ''
+          const fileName = oldPath.split('/').pop() || ''
+          const newPath = `${realId}/${fileName}`
+
+          // Move in storage
+          const { error: moveError } = await supabase.storage
+            .from('business-photos')
+            .move(oldPath, newPath)
+
+          if (!moveError) {
+            const { data: { publicUrl } } = supabase.storage
+              .from('business-photos')
+              .getPublicUrl(newPath)
+            movedPhotos.push(publicUrl)
+          } else {
+            // If move fails, keep original URL
+            movedPhotos.push(url)
+          }
+        } else {
+          movedPhotos.push(url)
+        }
+      }
+
+      // Update listing with final photo URLs
+      await supabase
+        .from('listings')
+        .update({ photos: movedPhotos })
+        .eq('id', realId)
     }
 
     router.push('/dashboard')
