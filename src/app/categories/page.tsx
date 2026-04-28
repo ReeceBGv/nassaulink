@@ -46,6 +46,8 @@ const categoryDescriptions: Record<string, string> = {
   'catering': 'Event catering and food services',
   'home-services': 'Cleaning, security, and home maintenance',
 }
+
+const categoryColors: Record<string, { bg: string; hover: string; text: string }> = {
   'pool-services': { bg: 'bg-blue-50', hover: 'hover:bg-blue-100', text: 'text-blue-600' },
   'ac-cooling': { bg: 'bg-cyan-50', hover: 'hover:bg-cyan-100', text: 'text-cyan-600' },
   'landscaping': { bg: 'bg-green-50', hover: 'hover:bg-green-100', text: 'text-green-600' },
