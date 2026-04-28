@@ -43,7 +43,7 @@ export default async function CategoryPage({ params }: PageProps) {
   // Get category info
   const { data: category } = await supabase
     .from('categories')
-    .select('*')
+    .select('id, name, slug, icon, description, image_url')
     .eq('slug', slug)
     .single()
 
@@ -54,7 +54,7 @@ export default async function CategoryPage({ params }: PageProps) {
   // Get listings in this category
   const { data: listings } = await supabase
     .from('listings')
-    .select('*')
+    .select('*, category_image_url:categories!inner(image_url)')
     .eq('category', category.name)
     .eq('status', 'approved')
     .order('tier', { ascending: false })
@@ -68,6 +68,12 @@ export default async function CategoryPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
+      {/* Demo Banner */}
+      <div className="bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
+        🚧 Demo Mode — These are sample listings. Real Nassau businesses coming soon.
+        <Link href="/signup" className="underline ml-1 hover:text-amber-700">Add your business →</Link>
+      </div>
+
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
@@ -127,7 +133,7 @@ export default async function CategoryPage({ params }: PageProps) {
                   {/* Card Photo */}
                   <div className="relative h-40 w-full overflow-hidden">
                     <Image
-                      src={listing.photos?.[0] || getHeroPhoto(listing.category)}
+                      src={listing.photos?.[0] || getHeroPhoto(listing.category, listing.category_image_url)}
                       alt={listing.name}
                       fill
                       className="object-cover"

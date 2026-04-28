@@ -1,5 +1,12 @@
-// Category-matched Unsplash placeholder images
-export const unsplashPhotos: Record<string, string[]> = {
+// Default fallback images (used when DB has no image_url AND no hardcoded match)
+const defaultPhotos = [
+  'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+  'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80',
+]
+
+// Hardcoded fallback map for categories not yet in DB or when DB is unreachable
+const fallbackPhotos: Record<string, string[]> = {
   'Pool Services': [
     'https://images.unsplash.com/photo-1572331165267-854da2b10ccc?w=800&q=80',
     'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80',
@@ -40,21 +47,134 @@ export const unsplashPhotos: Record<string, string[]> = {
     'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
     'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80',
   ],
+  'Restaurants': [
+    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
+    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
+  ],
+  'Bars & Nightlife': [
+    'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800&q=80',
+    'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80',
+    'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&q=80',
+  ],
+  'Spa & Wellness': [
+    'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
+    'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=800&q=80',
+    'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80',
+  ],
+  'Pharmacy': [
+    'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=80',
+    'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=80',
+    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80',
+  ],
+  'Grocery & Markets': [
+    'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80',
+    'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=800&q=80',
+    'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80',
+  ],
+  'Boating': [
+    'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80',
+    'https://images.unsplash.com/photo-1500930287596-c1ecaa373bb2?w=800&q=80',
+    'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=800&q=80',
+  ],
+  'Cafes': [
+    'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80',
+    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80',
+    'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80',
+  ],
+  'Car Rental': [
+    'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&q=80',
+    'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&q=80',
+    'https://images.unsplash.com/photo-1619642757334-4b3e6e3c9b0e?w=800&q=80',
+  ],
+  'Gym & Fitness': [
+    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80',
+    'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80',
+    'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800&q=80',
+  ],
+  'Tourism': [
+    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+    'https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=800&q=80',
+    'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&q=80',
+  ],
+  'Dental': [
+    'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80',
+    'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80',
+    'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80',
+  ],
+  'Liquor Store': [
+    'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=80',
+    'https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=800&q=80',
+    'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&q=80',
+  ],
+  'Veterinary': [
+    'https://images.unsplash.com/photo-1628009368231-7bb6c1ed9d26?w=800&q=80',
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80',
+    'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80',
+  ],
+  'Real Estate': [
+    'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80',
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+    'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80',
+  ],
+  'Hardware': [
+    'https://images.unsplash.com/photo-1581147036324-c17ac41dd161?w=800&q=80',
+    'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&q=80',
+    'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800&q=80',
+  ],
+  'Laundry': [
+    'https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=800&q=80',
+    'https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=800&q=80',
+    'https://images.unsplash.com/photo-1517677208171-0bc12dd0b079?w=800&q=80',
+  ],
+  'IT Services': [
+    'https://images.unsplash.com/photo-1597852074816-d933c7d2b988?w=800&q=80',
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
+    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80',
+  ],
+  'Beauty Salon': [
+    'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80',
+    'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80',
+    'https://images.unsplash.com/photo-1633681926035-ec1ac984418a?w=800&q=80',
+  ],
+  'Courier & Delivery': [
+    'https://images.unsplash.com/photo-1586864387789-628af9feed72?w=800&q=80',
+    'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&q=80',
+    'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=800&q=80',
+  ],
+  'Marina': [
+    'https://images.unsplash.com/photo-1500930287596-c1ecaa373bb2?w=800&q=80',
+    'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80',
+    'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=800&q=80',
+  ],
+  'Printing': [
+    'https://images.unsplash.com/photo-1562569633-622303d7938f?w=800&q=80',
+    'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=800&q=80',
+    'https://images.unsplash.com/photo-1544716278-ca5e2f9abd8c?w=800&q=80',
+  ],
+  'Bakery': [
+    'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80',
+    'https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=800&q=80',
+    'https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&q=80',
+  ],
 }
 
-// Default fallback images
-const defaultPhotos = [
-  'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
-  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
-  'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80',
-]
-
-export function getPlaceholderPhotos(category: string, count: number = 3): string[] {
-  const photos = unsplashPhotos[category] || defaultPhotos
+/** Return multiple placeholder images for a gallery.
+ *  Priority: 1) DB category.image_url, 2) hardcoded fallback map, 3) generic defaults */
+export function getPlaceholderPhotos(category: string, count: number = 3, categoryImageUrl?: string | null): string[] {
+  if (categoryImageUrl) {
+    return [categoryImageUrl, ...defaultPhotos].slice(0, count)
+  }
+  const photos = fallbackPhotos[category] || defaultPhotos
   return photos.slice(0, count)
 }
 
-export function getHeroPhoto(category: string): string {
-  const photos = unsplashPhotos[category] || defaultPhotos
+/** Return a single hero image for a listing card.
+ *  Priority: 1) DB category.image_url, 2) hardcoded fallback map, 3) generic default */
+export function getHeroPhoto(category: string, categoryImageUrl?: string | null): string {
+  if (categoryImageUrl) {
+    return categoryImageUrl
+  }
+  const photos = fallbackPhotos[category] || defaultPhotos
   return photos[0]
 }
