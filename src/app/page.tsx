@@ -17,6 +17,11 @@ export default async function HomePage() {
     .order('tier', { ascending: false })
     .limit(6)
 
+  const { data: allListings } = await supabase
+    .from('listings')
+    .select('category')
+    .eq('status', 'approved')
+
   const { data: categories } = await supabase
     .from('categories')
     .select('*')
@@ -97,7 +102,7 @@ export default async function HomePage() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {(categories || []).map((cat) => {
-            const catCount = listings?.filter(l => l.category === cat.name).length || 0
+            const catCount = allListings?.filter(l => l.category === cat.name).length || 0
             return (
               <Link
                 key={cat.id}
