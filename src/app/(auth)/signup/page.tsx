@@ -59,9 +59,7 @@ export default function SignupPage() {
   return (
     <div className="bg-white rounded-2xl shadow-lg p-8">
       <div className="text-center mb-8">
-        <div className="w-12 h-12 bg-[#0066cc] rounded-xl flex items-center justify-center text-white text-xl mx-auto mb-4">
-          🏝️
-        </div>
+          <img src="/logo.jpg" alt="NassauLink" className="h-8 w-auto rounded-lg mx-auto mb-4" />
         <h1 className="text-2xl font-bold text-[#1a1a2e]">Create your account</h1>
         <p className="text-gray-500 mt-1">Start listing your business</p>
       </div>
