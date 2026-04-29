@@ -29,14 +29,16 @@ export default function DeletePage() {
         return
       }
 
-      // Check ownership
+      // Check ownership or admin
       const { data: listing } = await supabase
         .from('listings')
         .select('owner_id')
         .eq('id', id)
         .single()
 
-      if (!listing || listing.owner_id !== user.id) {
+      const isAdmin = user.email === 'admin@nassaulink.com'
+
+      if (!listing || (listing.owner_id !== user.id && !isAdmin)) {
         setStatus('You can only delete your own listings')
         setTimeout(() => router.push('/dashboard'), 2000)
         return
