@@ -68,7 +68,7 @@ export default async function DashboardPage() {
               </div>
               <div className="flex items-center gap-2">
                 <a
-                  href={`/listing/${listing.slug}`}
+                  href={`/business/${listing.slug}`}
                   target="_blank"
                   className="p-2 text-gray-400 hover:text-[#0066cc] transition-colors"
                   title="View"

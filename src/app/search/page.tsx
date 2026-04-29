@@ -28,7 +28,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
   // Get all approved listings
   let dbQuery = supabase
     .from('listings')
-    .select('*, category_image_url:categories!inner(image_url)')
+    .select('*')
     .eq('status', 'approved')
 
   if (catFilter) {
@@ -205,7 +205,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                       {/* Card Photo */}
                       <div className="relative h-44 w-full overflow-hidden">
                         <Image
-                          src={listing.photos?.[0] || getHeroPhoto(listing.category, listing.category_image_url)}
+                          src={listing.photos?.[0] || getHeroPhoto(listing.category, categoryImageMap.get(listing.category))}
                           alt={listing.name}
                           fill
                           className="object-cover"

@@ -8,7 +8,12 @@ import { createClient } from '@supabase/supabase-js'
 const categories = [
   'Pool Services', 'AC & Cooling', 'Landscaping', 'Auto Repair',
   'Marine Services', 'Trades & Repairs', 'Catering', 'Home Services',
-  'Restaurant', 'Retail', 'Professional Services', 'Other'
+  'Restaurants', 'Bars & Nightlife', 'Spa & Wellness', 'Pharmacy',
+  'Grocery & Markets', 'Boating', 'Cafes', 'Car Rental',
+  'Gym & Fitness', 'Tourism', 'Dental', 'Liquor Store',
+  'Veterinary', 'Real Estate', 'Hardware', 'Laundry',
+  'IT Services', 'Beauty Salon', 'Courier & Delivery', 'Marina',
+  'Printing', 'Bakery',
 ]
 
 export default function ClaimPage() {
