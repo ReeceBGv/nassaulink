@@ -112,4 +112,8 @@ begin
   
   return new_listing_id;
 end;
-$$ language plpgsql security definer;
+$$ language plpgsql security definer
+set search_path = public, pg_temp;
+
+-- Security: Revoke EXECUTE on SECURITY DEFINER function from public roles
+revoke execute on function approve_business_claim(uuid, uuid) from anon, authenticated, public;
