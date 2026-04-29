@@ -10,6 +10,9 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
+// Force dynamic rendering — do not static generate
+export const dynamic = 'force-dynamic'
+
 // Generate dynamic metadata for SEO
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
@@ -48,25 +51,25 @@ export default async function BusinessPage({ params }: PageProps) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 
-  const { data: listing } = await supabase
+  const { data: listing, error } = await supabase
     .from('listings')
-    .select('*, categories!inner(image_url)')
+    .select('*')
     .eq('slug', slug)
     .eq('status', 'approved')
     .single()
 
-  // Also fetch the category image_url separately for fallback
+  if (error || !listing) {
+    notFound()
+  }
+
+  // Fetch category image_url separately
   const { data: categoryRow } = await supabase
     .from('categories')
     .select('image_url')
-    .eq('name', listing?.category || '')
+    .eq('name', listing.category || '')
     .single()
 
   const categoryImageUrl = categoryRow?.image_url
-
-  if (!listing) {
-    notFound()
-  }
 
   // Fetch related listings from same category
   const { data: related } = await supabase
@@ -136,6 +139,12 @@ export default async function BusinessPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
+      {/* Demo Banner */}
+      <div className="bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
+        🚧 Demo Mode — These are sample listings. Real Nassau businesses coming soon.
+        <Link href="/signup" className="underline ml-1 hover:text-amber-700">Add your business →</Link>
+      </div>
+
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -180,21 +189,14 @@ export default async function BusinessPage({ params }: PageProps) {
           </div>
 
           <div className="p-8">
-            {/* Category & Verification */}
+            {/* Demo Badge */}
             <div className="flex items-center gap-2 mb-4">
+              <span className="text-xs font-bold uppercase px-2.5 py-1 rounded-full bg-gray-900 text-white">
+                Sample Listing
+              </span>
               <span className="text-xs font-medium text-[#0066cc] bg-blue-50 px-2.5 py-1 rounded-full">
                 {listing.category}
               </span>
-              <span className="text-xs font-medium text-green-700 bg-green-50 px-2.5 py-1 rounded-full flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                Verified
-              </span>
-              {listing.tier === 'premium' && (
-                <span className="text-xs font-medium text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full flex items-center gap-1">
-                  <Award size={12} />
-                  Top Rated
-                </span>
-              )}
             </div>
 
             <h1 className="text-3xl font-extrabold text-[#1a1a2e] mb-3">{listing.name}</h1>
