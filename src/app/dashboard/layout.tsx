@@ -18,7 +18,7 @@ export default async function DashboardLayout({
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <a href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
-            <img src="/logo.svg" alt="NassauLink" className="h-16 w-auto" />
+            <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </a>
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-500">{user.email}</span>
