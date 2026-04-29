@@ -36,7 +36,7 @@ export default function DeletePage() {
         .eq('id', id)
         .single()
 
-      const isAdmin = user.email === 'admin@nassaulink.com'
+      const isAdmin = user.email === 'reecemhovah@gmail.com'
 
       if (!listing || (listing.owner_id !== user.id && !isAdmin)) {
         setStatus('You can only delete your own listings')
