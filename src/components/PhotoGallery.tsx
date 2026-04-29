@@ -23,7 +23,7 @@ export default function PhotoGallery({ photos, businessName, categoryImage }: Ph
 
   if (!displayPhotos || displayPhotos.length === 0) {
     return (
-      <div className="relative h-64 bg-gradient-to-br from-[#0066cc] to-[#004499] flex items-center justify-center overflow-hidden rounded-2xl">
+      <div className="relative h-64 bg-gradient-to-br from-[#2ECFDA] to-[#289CA6] flex items-center justify-center overflow-hidden rounded-2xl">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-4 left-4 w-32 h-32 bg-white rounded-full" />
           <div className="absolute bottom-8 right-8 w-48 h-48 bg-white rounded-full" />
@@ -108,7 +108,7 @@ export default function PhotoGallery({ photos, businessName, categoryImage }: Ph
               onClick={() => setCurrentIndex(i)}
               className={`relative w-20 h-14 rounded-lg overflow-hidden shrink-0 transition-all ${
                 i === currentIndex 
-                  ? 'ring-2 ring-[#0066cc] ring-offset-1' 
+                  ? 'ring-2 ring-[#2ECFDA] ring-offset-1' 
                   : 'opacity-60 hover:opacity-100'
               }`}
             >

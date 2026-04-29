@@ -143,12 +143,12 @@ export default function NewListingPage() {
   return (
     <div className="max-w-2xl">
       <div className="flex items-center gap-2 mb-6">
-        <Link href="/dashboard" className="text-gray-400 hover:text-[#0066cc] transition-colors">
+        <Link href="/dashboard" className="text-gray-400 hover:text-[#2ECFDA] transition-colors">
           ← Back
         </Link>
       </div>
 
-      <h1 className="text-2xl font-bold text-[#1a1a2e] mb-6">Add New Listing</h1>
+      <h1 className="text-2xl font-bold text-[#242926] mb-6">Add New Listing</h1>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-5">
         <div>
@@ -157,7 +157,7 @@ export default function NewListingPage() {
             type="text"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
             placeholder="e.g. Island Blue Pools"
             required
           />
@@ -168,7 +168,7 @@ export default function NewListingPage() {
           <select
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
             required
           >
             <option value="">Select a category</option>
@@ -183,7 +183,7 @@ export default function NewListingPage() {
           <textarea
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none min-h-[100px] resize-y"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none min-h-[100px] resize-y"
             placeholder="What does your business do?"
             required
           />
@@ -196,7 +196,7 @@ export default function NewListingPage() {
               type="tel"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
               placeholder="+1 (242) 555-1234"
               required
             />
@@ -207,7 +207,7 @@ export default function NewListingPage() {
               type="tel"
               value={form.whatsapp}
               onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
               placeholder="+1 (242) 555-5678"
             />
           </div>
@@ -223,7 +223,7 @@ export default function NewListingPage() {
                 onClick={() => setForm({ ...form, tier: tier.value })}
                 className={`px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all ${
                   form.tier === tier.value
-                    ? 'border-[#0066cc] bg-blue-50 text-[#0066cc]'
+                    ? 'border-[#2ECFDA] bg-cyan-50 text-[#2ECFDA]'
                     : 'border-gray-200 text-gray-600 hover:border-gray-300'
                 }`}
               >
@@ -247,7 +247,7 @@ export default function NewListingPage() {
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-[#ff6b4a] hover:bg-[#e55a3a] text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50"
+            className="flex-1 bg-[#FAD122] hover:bg-[#DDA917] text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50"
           >
             {loading ? 'Creating...' : 'Create Listing'}
           </button>

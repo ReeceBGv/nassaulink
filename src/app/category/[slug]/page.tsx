@@ -77,15 +77,15 @@ export default async function CategoryPage({ params }: PageProps) {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/categories" className="text-sm font-medium text-gray-500 hover:text-[#0066cc] flex items-center gap-1">
+            <Link href="/categories" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] flex items-center gap-1">
               <ArrowLeft size={16} />
               Categories
             </Link>
-            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#0066cc]">Sign In</Link>
+            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA]">Sign In</Link>
           </div>
         </nav>
       </header>
@@ -94,9 +94,9 @@ export default async function CategoryPage({ params }: PageProps) {
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2">
-            <li><Link href="/" className="hover:text-[#0066cc]">Home</Link></li>
+            <li><Link href="/" className="hover:text-[#2ECFDA]">Home</Link></li>
             <li><span className="text-gray-300">/</span></li>
-            <li><Link href="/categories" className="hover:text-[#0066cc]">Categories</Link></li>
+            <li><Link href="/categories" className="hover:text-[#2ECFDA]">Categories</Link></li>
             <li><span className="text-gray-300">/</span></li>
             <li><span className="text-gray-800 font-medium">{category.name}</span></li>
           </ol>
@@ -106,7 +106,7 @@ export default async function CategoryPage({ params }: PageProps) {
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-4xl">{category.icon || '🏢'}</span>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-[#1a1a2e]">{category.name}</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-[#242926]">{category.name}</h1>
           </div>
           <p className="text-gray-500 max-w-2xl">
             {category.description || `Find the best ${category.name.toLowerCase()} businesses in Nassau and across The Bahamas.`}
@@ -146,12 +146,12 @@ export default async function CategoryPage({ params }: PageProps) {
                       <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
                         {tier.label}
                       </span>
-                      <span className="text-xs font-medium text-[#0066cc] bg-blue-50 px-2.5 py-1 rounded-full">
+                      <span className="text-xs font-medium text-[#2ECFDA] bg-cyan-50 px-2.5 py-1 rounded-full">
                         {listing.category}
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-[#1a1a2e] text-lg mb-2">{listing.name}</h3>
+                    <h3 className="font-bold text-[#242926] text-lg mb-2">{listing.name}</h3>
                     <p className="text-sm text-gray-500 mb-4 line-clamp-2">{listing.description}</p>
 
                     {/* Rating */}
@@ -211,7 +211,7 @@ export default async function CategoryPage({ params }: PageProps) {
             <p className="text-gray-500 mb-6">Be the first to list your {category.name.toLowerCase()} business!</p>
             <Link
               href="/signup"
-              className="inline-block bg-[#ff6b4a] hover:bg-[#e55a3a] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+              className="inline-block bg-[#FAD122] hover:bg-[#DDA917] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
             >
               Add Your Business →
             </Link>

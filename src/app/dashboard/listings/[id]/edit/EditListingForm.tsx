@@ -100,12 +100,12 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
   return (
     <div className="max-w-2xl">
       <div className="flex items-center gap-2 mb-6">
-        <Link href="/dashboard" className="text-gray-400 hover:text-[#0066cc] transition-colors">
+        <Link href="/dashboard" className="text-gray-400 hover:text-[#2ECFDA] transition-colors">
           ← Back
         </Link>
       </div>
 
-      <h1 className="text-2xl font-bold text-[#1a1a2e] mb-6">Edit Listing</h1>
+      <h1 className="text-2xl font-bold text-[#242926] mb-6">Edit Listing</h1>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-5">
         <div>
@@ -114,7 +114,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
             type="text"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
             required
           />
         </div>
@@ -124,7 +124,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
           <select
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
             required
           >
             <option value="">Select a category</option>
@@ -139,7 +139,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
           <textarea
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none min-h-[100px] resize-y"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none min-h-[100px] resize-y"
             required
           />
         </div>
@@ -151,7 +151,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
               type="tel"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
               required
             />
           </div>
@@ -161,7 +161,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
               type="tel"
               value={form.whatsapp}
               onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#0066cc] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
             />
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-[#ff6b4a] hover:bg-[#e55a3a] text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50"
+            className="flex-1 bg-[#FAD122] hover:bg-[#DDA917] text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50"
           >
             {loading ? 'Saving...' : 'Save Changes'}
           </button>

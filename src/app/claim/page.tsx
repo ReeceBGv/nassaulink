@@ -86,7 +86,7 @@ export default function ClaimPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 bg-[#0066cc] text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-[#2ECFDA] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#289CA6] transition-colors"
           >
             <ArrowLeft size={18} />
             Back to Home
@@ -107,10 +107,10 @@ export default function ClaimPage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
-          <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#0066cc] flex items-center gap-1 transition-colors">
+          <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] flex items-center gap-1 transition-colors">
             <ArrowLeft size={16} />
             Cancel
           </Link>
@@ -120,7 +120,7 @@ export default function ClaimPage() {
       <main className="max-w-2xl mx-auto px-6 py-10">
         <div className="text-center mb-8">
           <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-            <Building2 size={24} className="text-[#0066cc]" />
+            <Building2 size={24} className="text-[#2ECFDA]" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Claim Your Business</h1>
           <p className="text-gray-600 mt-1">
@@ -138,7 +138,7 @@ export default function ClaimPage() {
           {/* Business Info */}
           <div className="bg-white rounded-2xl p-6 border border-gray-100">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Building2 size={18} className="text-[#0066cc]" />
+              <Building2 size={18} className="text-[#2ECFDA]" />
               Business Information
             </h2>
 
@@ -151,7 +151,7 @@ export default function ClaimPage() {
                   required
                   value={formData.business_name}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="e.g., Island Pool Services"
                 />
               </div>
@@ -163,7 +163,7 @@ export default function ClaimPage() {
                   required
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                 >
                   <option value="">Select a category</option>
                   {categories.map(cat => (
@@ -179,7 +179,7 @@ export default function ClaimPage() {
                   rows={3}
                   value={formData.description}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all resize-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all resize-none"
                   placeholder="What does your business do?"
                 />
               </div>
@@ -189,7 +189,7 @@ export default function ClaimPage() {
           {/* Contact Info */}
           <div className="bg-white rounded-2xl p-6 border border-gray-100">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Phone size={18} className="text-[#0066cc]" />
+              <Phone size={18} className="text-[#2ECFDA]" />
               Contact Details
             </h2>
 
@@ -202,7 +202,7 @@ export default function ClaimPage() {
                   required
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="(242) 555-0123"
                 />
               </div>
@@ -214,7 +214,7 @@ export default function ClaimPage() {
                   name="whatsapp"
                   value={formData.whatsapp}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="Same as phone"
                 />
               </div>
@@ -226,7 +226,7 @@ export default function ClaimPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="info@yourbusiness.com"
                 />
               </div>
@@ -238,7 +238,7 @@ export default function ClaimPage() {
                   name="website"
                   value={formData.website}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="https://..."
                 />
               </div>
@@ -250,7 +250,7 @@ export default function ClaimPage() {
                   name="address"
                   value={formData.address}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="123 Bay Street, Nassau"
                 />
               </div>
@@ -260,7 +260,7 @@ export default function ClaimPage() {
           {/* Your Info */}
           <div className="bg-white rounded-2xl p-6 border border-gray-100">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <User size={18} className="text-[#0066cc]" />
+              <User size={18} className="text-[#2ECFDA]" />
               Your Information
             </h2>
 
@@ -273,7 +273,7 @@ export default function ClaimPage() {
                   required
                   value={formData.contact_name}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="John Doe"
                 />
               </div>
@@ -286,7 +286,7 @@ export default function ClaimPage() {
                   required
                   value={formData.contact_email}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="john@example.com"
                 />
               </div>
@@ -298,7 +298,7 @@ export default function ClaimPage() {
                   name="contact_phone"
                   value={formData.contact_phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#0066cc] focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#2ECFDA] focus:ring-2 focus:ring-cyan-100 outline-none transition-all"
                   placeholder="(242) 555-0123"
                 />
               </div>
@@ -308,7 +308,7 @@ export default function ClaimPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0066cc] text-white py-3.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-[#2ECFDA] text-white py-3.5 rounded-xl font-semibold hover:bg-[#289CA6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               <>

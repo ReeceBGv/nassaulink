@@ -43,11 +43,11 @@ export default async function ClaimsAdminPage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/dashboard" className="text-sm font-medium text-gray-600 hover:text-[#0066cc]">
+            <Link href="/dashboard" className="text-sm font-medium text-gray-600 hover:text-[#2ECFDA]">
               Dashboard
             </Link>
             <span className="text-sm text-gray-500">
@@ -130,7 +130,7 @@ function ClaimCard({ claim, isAdmin, readonly = false }: { claim: any, isAdmin: 
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
             <h3 className="text-lg font-bold text-gray-900">{claim.business_name}</h3>
-            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-blue-50 text-[#0066cc]">
+            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-cyan-50 text-[#2ECFDA]">
               {claim.category}
             </span>
             {claim.source === 'scraper' && (
@@ -164,7 +164,7 @@ function ClaimCard({ claim, isAdmin, readonly = false }: { claim: any, isAdmin: 
             {claim.website && (
               <div className="flex items-center gap-2 text-gray-600">
                 <Globe size={14} className="text-gray-400" />
-                <a href={claim.website} target="_blank" rel="noopener" className="text-[#0066cc] hover:underline">
+                <a href={claim.website} target="_blank" rel="noopener" className="text-[#2ECFDA] hover:underline">
                   Website <ExternalLink size={12} className="inline" />
                 </a>
               </div>

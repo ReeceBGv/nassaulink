@@ -39,15 +39,15 @@ export default async function CategoriesPage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#0066cc] flex items-center gap-1">
+            <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] flex items-center gap-1">
               <ArrowLeft size={16} />
               Home
             </Link>
-            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#0066cc]">Sign In</Link>
+            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA]">Sign In</Link>
           </div>
         </nav>
       </header>
@@ -55,7 +55,7 @@ export default async function CategoriesPage() {
       <main className="max-w-7xl mx-auto px-6 py-12">
         {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-[#1a1a2e] mb-3">Browse Categories</h1>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#242926] mb-3">Browse Categories</h1>
           <p className="text-gray-500 max-w-xl mx-auto">
             Find exactly what you need across {categories?.length || 0} business categories in Nassau and The Bahamas
           </p>
@@ -75,7 +75,7 @@ export default async function CategoriesPage() {
             />
             <button
               type="submit"
-              className="bg-[#0066cc] hover:bg-[#004499] text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
+              className="bg-[#2ECFDA] hover:bg-[#289CA6] text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
             >
               Search
             </button>
@@ -91,7 +91,7 @@ export default async function CategoriesPage() {
               <Link
                 key={cat.id}
                 href={`/category/${cat.slug}`}
-                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-transparent hover:border-[#0066cc] hover:shadow-lg transition-all"
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-transparent hover:border-[#2ECFDA] hover:shadow-lg transition-all"
               >
                 {/* Category Image */}
                 {cat.image_url && (
@@ -108,10 +108,10 @@ export default async function CategoriesPage() {
                   </div>
                 )}
                 <div className="p-5">
-                  <h3 className="font-bold text-[#1a1a2e] mb-1 group-hover:text-[#0066cc] transition-colors">{cat.name}</h3>
+                  <h3 className="font-bold text-[#242926] mb-1 group-hover:text-[#2ECFDA] transition-colors">{cat.name}</h3>
                   <p className="text-sm text-gray-400 mb-2">{cat.description || 'Local businesses in Nassau'}</p>
                   <p className="text-sm text-gray-500">{countMap[cat.name] || 0} {countMap[cat.name] === 1 ? 'listing' : 'listings'}</p>
-                  <div className="mt-4 flex items-center text-sm font-medium text-[#0066cc] opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="mt-4 flex items-center text-sm font-medium text-[#2ECFDA] opacity-0 group-hover:opacity-100 transition-opacity">
                     Browse →
                   </div>
                 </div>
