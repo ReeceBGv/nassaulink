@@ -183,8 +183,19 @@ def parse_business_listing(data):
     if web_match:
         result['website'] = web_match.group(2)
 
-    # Extract email
-    email_match = re.search(r'mailto:([^\)\s]+)', markdown)
+    # Extract email — look for mailto in the contact/address section, not site footer
+    # First try to find email near the address or phone section
+    email_match = re.search(r'[Aa]ddress[:\s]*[^\n]+\n[^\n]*mailto:([^\)\s]+)', markdown)
+    if not email_match:
+        # Try to find email in a contact info block (after phone, before website)
+        email_match = re.search(r'[Tt]el[:\s]*\d{3}-\d{3}-\d{4}[^\n]*\n[^\n]*mailto:([^\)\s]+)', markdown)
+    if not email_match:
+        # Last resort: find any mailto that isn't the site footer email
+        all_emails = re.findall(r'mailto:([^\)\s]+)', markdown)
+        for em in all_emails:
+            if 'bahamaslocal.com' not in em and len(em) > 5:
+                email_match = type('obj', (object,), {'group': lambda x: em})()
+                break
     if email_match:
         result['email'] = email_match.group(1)
 

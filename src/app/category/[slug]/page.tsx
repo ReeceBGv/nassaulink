@@ -54,7 +54,7 @@ export default async function CategoryPage({ params }: PageProps) {
   // Get listings in this category
   const { data: listings } = await supabase
     .from('listings')
-    .select('*, category_image_url:categories!inner(image_url)')
+    .select('*')
     .eq('category', category.name)
     .eq('status', 'approved')
     .order('tier', { ascending: false })
