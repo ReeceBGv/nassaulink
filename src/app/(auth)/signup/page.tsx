@@ -71,7 +71,7 @@ export default function SignupPage() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-[#000000] outline-none"
             placeholder="you@example.com"
             required
           />
@@ -83,7 +83,7 @@ export default function SignupPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-[#000000] outline-none"
             placeholder="Min 6 characters"
             minLength={6}
             required
@@ -96,7 +96,7 @@ export default function SignupPage() {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-[#000000] outline-none"
             placeholder="••••••••"
             required
           />
@@ -117,7 +117,7 @@ export default function SignupPage() {
 
       <p className="text-center text-sm text-gray-500 mt-6">
         Already have an account?{' '}
-        <Link href="/login" className="text-[#2ECFDA] font-medium hover:underline">
+        <Link href="/login" className="text-[#000000] font-medium hover:underline">
           Sign in
         </Link>
       </p>

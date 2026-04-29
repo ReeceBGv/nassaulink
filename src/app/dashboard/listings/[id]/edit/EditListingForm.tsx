@@ -100,7 +100,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
   return (
     <div className="max-w-2xl">
       <div className="flex items-center gap-2 mb-6">
-        <Link href="/dashboard" className="text-gray-400 hover:text-[#2ECFDA] transition-colors">
+        <Link href="/dashboard" className="text-gray-400 hover:text-[#000000] transition-colors">
           ← Back
         </Link>
       </div>
@@ -114,7 +114,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
             type="text"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none"
             required
           />
         </div>
@@ -124,7 +124,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
           <select
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none"
             required
           >
             <option value="">Select a category</option>
@@ -139,7 +139,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
           <textarea
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none min-h-[100px] resize-y"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none min-h-[100px] resize-y"
             required
           />
         </div>
@@ -151,7 +151,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
               type="tel"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none"
               required
             />
           </div>
@@ -161,7 +161,7 @@ export default function EditListingForm({ listing }: { listing: Listing }) {
               type="tel"
               value={form.whatsapp}
               onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none"
             />
           </div>
         </div>

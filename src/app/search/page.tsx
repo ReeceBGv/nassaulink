@@ -80,10 +80,10 @@ export default async function SearchPage({ searchParams }: PageProps) {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#000000] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
-          <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] flex items-center gap-1">
+          <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#000000] flex items-center gap-1">
             <ArrowLeft size={16} />
             Home
           </Link>
@@ -113,7 +113,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
               />
               <button
                 type="submit"
-                className="bg-[#2ECFDA] hover:bg-[#289CA6] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+                className="bg-[#000000] hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
               >
                 Search
               </button>
@@ -137,7 +137,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                   <a
                     href={`/search?q=${encodeURIComponent(query)}`}
                     className={`block text-sm px-3 py-2 rounded-lg transition-colors ${
-                      !catFilter ? 'bg-cyan-50 text-[#2ECFDA] font-medium' : 'text-gray-600 hover:bg-gray-50'
+                      !catFilter ? 'bg-gray-50 text-[#000000] font-medium' : 'text-gray-600 hover:bg-gray-50'
                     }`}
                   >
                     All Categories
@@ -147,7 +147,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                       key={cat.slug}
                       href={`/search?q=${encodeURIComponent(query)}&category=${encodeURIComponent(cat.name)}`}
                       className={`block text-sm px-3 py-2 rounded-lg transition-colors ${
-                        catFilter === cat.name ? 'bg-cyan-50 text-[#2ECFDA] font-medium' : 'text-gray-600 hover:bg-gray-50'
+                        catFilter === cat.name ? 'bg-gray-50 text-[#000000] font-medium' : 'text-gray-600 hover:bg-gray-50'
                       }`}
                     >
                       {cat.name}
@@ -163,7 +163,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                   <a
                     href={`/search?q=${encodeURIComponent(query)}${catFilter ? `&category=${encodeURIComponent(catFilter)}` : ''}`}
                     className={`block text-sm px-3 py-2 rounded-lg transition-colors ${
-                      !tierFilter ? 'bg-cyan-50 text-[#2ECFDA] font-medium' : 'text-gray-600 hover:bg-gray-50'
+                      !tierFilter ? 'bg-gray-50 text-[#000000] font-medium' : 'text-gray-600 hover:bg-gray-50'
                     }`}
                   >
                     All Tiers
@@ -173,7 +173,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                       key={tier}
                       href={`/search?q=${encodeURIComponent(query)}${catFilter ? `&category=${encodeURIComponent(catFilter)}` : ''}&tier=${tier}`}
                       className={`block text-sm px-3 py-2 rounded-lg transition-colors capitalize ${
-                        tierFilter === tier ? 'bg-cyan-50 text-[#2ECFDA] font-medium' : 'text-gray-600 hover:bg-gray-50'
+                        tierFilter === tier ? 'bg-gray-50 text-[#000000] font-medium' : 'text-gray-600 hover:bg-gray-50'
                       }`}
                     >
                       {tier}
@@ -220,7 +220,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
 
                       <div className="p-5">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-xs font-medium text-[#2ECFDA] bg-cyan-50 px-2.5 py-1 rounded-full">
+                          <span className="text-xs font-medium text-[#000000] bg-gray-50 px-2.5 py-1 rounded-full">
                             {listing.category}
                           </span>
                         </div>
@@ -265,7 +265,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                           )}
                           <a
                             href={`tel:${listing.phone}`}
-                            className="flex-1 bg-[#2ECFDA] hover:bg-[#289CA6] text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                            className="flex-1 bg-[#000000] hover:bg-gray-800 text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
                           >
                             <Phone size={16} />
                             Call

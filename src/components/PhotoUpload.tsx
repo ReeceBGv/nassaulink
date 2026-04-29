@@ -117,7 +117,7 @@ export default function PhotoUpload({ listingId, existingPhotos = [], onPhotosCh
                 sizes="150px"
               />
               {index === 0 && (
-                <div className="absolute top-2 left-2 bg-[#2ECFDA] text-white text-xs px-2 py-0.5 rounded-full">
+                <div className="absolute top-2 left-2 bg-[#000000] text-white text-xs px-2 py-0.5 rounded-full">
                   Main
                 </div>
               )}
@@ -137,10 +137,10 @@ export default function PhotoUpload({ listingId, existingPhotos = [], onPhotosCh
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading}
-          className="w-full border-2 border-dashed border-gray-300 hover:border-[#2ECFDA] rounded-xl p-6 flex flex-col items-center gap-2 transition-colors disabled:opacity-50"
+          className="w-full border-2 border-dashed border-gray-300 hover:border-[#000000] rounded-xl p-6 flex flex-col items-center gap-2 transition-colors disabled:opacity-50"
         >
           {uploading ? (
-            <div className="w-8 h-8 border-2 border-[#2ECFDA] border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-[#000000] border-t-transparent rounded-full animate-spin" />
           ) : (
             <>
               <Upload size={24} className="text-gray-400" />

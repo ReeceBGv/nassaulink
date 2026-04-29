@@ -53,12 +53,12 @@ export default async function HomePage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#000000] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
           <div className="flex items-center gap-6">
-            <Link href="/categories" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] transition-colors">Categories</Link>
-            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] transition-colors">Sign In</Link>
+            <Link href="/categories" className="text-sm font-medium text-gray-500 hover:text-[#000000] transition-colors">Categories</Link>
+            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#000000] transition-colors">Sign In</Link>
             <Link href="/signup" className="bg-[#FAD122] hover:bg-[#DDA917] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
               List Your Business
             </Link>
@@ -67,7 +67,7 @@ export default async function HomePage() {
       </header>
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-[#2ECFDA] to-[#289CA6] text-white py-20 text-center relative overflow-hidden">
+      <section className="bg-gradient-to-br from-[#000000] to-[#333333] text-white py-20 text-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="max-w-3xl mx-auto px-6 relative">
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
@@ -109,7 +109,7 @@ export default async function HomePage() {
       <section className="py-16 max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-[#242926]">Browse by Category</h2>
-          <Link href="/categories" className="text-[#2ECFDA] font-semibold text-sm hover:underline">View all →</Link>
+          <Link href="/categories" className="text-[#000000] font-semibold text-sm hover:underline">View all →</Link>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {(categories || []).slice(0, 6).map((cat) => {
@@ -118,9 +118,9 @@ export default async function HomePage() {
               <Link
                 key={cat.id}
                 href={`/category/${cat.slug}`}
-                className="bg-white rounded-xl p-5 shadow-sm border border-transparent hover:border-[#2ECFDA] hover:shadow-md transition-all group"
+                className="bg-white rounded-xl p-5 shadow-sm border border-transparent hover:border-[#000000] hover:shadow-md transition-all group"
               >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-3 bg-gray-50 group-hover:bg-cyan-50 transition-colors">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-3 bg-gray-50 group-hover:bg-gray-50 transition-colors">
                   {cat.icon}
                 </div>
                 <h3 className="font-semibold text-[#242926]">{cat.name}</h3>
@@ -135,7 +135,7 @@ export default async function HomePage() {
       <section className="py-8 max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-[#242926]">Featured Listings</h2>
-          <Link href="/categories" className="text-[#2ECFDA] font-semibold text-sm hover:underline">Browse all →</Link>
+          <Link href="/categories" className="text-[#000000] font-semibold text-sm hover:underline">Browse all →</Link>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {(listings || []).map((listing) => {
@@ -173,7 +173,7 @@ export default async function HomePage() {
                   }`}>
                     {listing.tier}
                   </span>
-                  <span className="text-xs font-medium text-[#2ECFDA] bg-cyan-50 px-2.5 py-1 rounded-full">
+                  <span className="text-xs font-medium text-[#000000] bg-gray-50 px-2.5 py-1 rounded-full">
                     {listing.category}
                   </span>
                 </div>
@@ -226,9 +226,9 @@ export default async function HomePage() {
       <footer className="bg-white border-t border-gray-100 py-10 text-center text-gray-500 text-sm">
         <p>© 2026 NassauLink. Built for The Bahamas. 🇧🇸</p>
         <div className="flex justify-center gap-4 mt-2">
-          <Link href="#" className="text-[#2ECFDA] hover:underline">About</Link>
-          <Link href="#" className="text-[#2ECFDA] hover:underline">Privacy</Link>
-          <Link href="#" className="text-[#2ECFDA] hover:underline">Contact</Link>
+          <Link href="#" className="text-[#000000] hover:underline">About</Link>
+          <Link href="#" className="text-[#000000] hover:underline">Privacy</Link>
+          <Link href="#" className="text-[#000000] hover:underline">Contact</Link>
         </div>
       </footer>
     </div>

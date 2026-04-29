@@ -22,7 +22,7 @@ export default async function DashboardPage() {
         <div className="flex gap-3">
           <Link
             href="/dashboard/claims"
-            className="bg-[#2ECFDA] hover:bg-[#289CA6] text-white font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2 transition-colors"
+            className="bg-[#000000] hover:bg-gray-800 text-white font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2 transition-colors"
           >
             <Eye size={18} />
             Review Claims
@@ -70,14 +70,14 @@ export default async function DashboardPage() {
                 <a
                   href={`/business/${listing.slug}`}
                   target="_blank"
-                  className="p-2 text-gray-400 hover:text-[#2ECFDA] transition-colors"
+                  className="p-2 text-gray-400 hover:text-[#000000] transition-colors"
                   title="View"
                 >
                   <Eye size={18} />
                 </a>
                 <Link
                   href={`/dashboard/listings/${listing.id}/edit`}
-                  className="p-2 text-gray-400 hover:text-[#2ECFDA] transition-colors"
+                  className="p-2 text-gray-400 hover:text-[#000000] transition-colors"
                   title="Edit"
                 >
                   <Pencil size={18} />

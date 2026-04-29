@@ -143,7 +143,7 @@ export default function NewListingPage() {
   return (
     <div className="max-w-2xl">
       <div className="flex items-center gap-2 mb-6">
-        <Link href="/dashboard" className="text-gray-400 hover:text-[#2ECFDA] transition-colors">
+        <Link href="/dashboard" className="text-gray-400 hover:text-[#000000] transition-colors">
           ← Back
         </Link>
       </div>
@@ -157,7 +157,7 @@ export default function NewListingPage() {
             type="text"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none"
             placeholder="e.g. Island Blue Pools"
             required
           />
@@ -168,7 +168,7 @@ export default function NewListingPage() {
           <select
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none"
             required
           >
             <option value="">Select a category</option>
@@ -183,7 +183,7 @@ export default function NewListingPage() {
           <textarea
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none min-h-[100px] resize-y"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none min-h-[100px] resize-y"
             placeholder="What does your business do?"
             required
           />
@@ -196,7 +196,7 @@ export default function NewListingPage() {
               type="tel"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none"
               placeholder="+1 (242) 555-1234"
               required
             />
@@ -207,7 +207,7 @@ export default function NewListingPage() {
               type="tel"
               value={form.whatsapp}
               onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#2ECFDA] outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-[#000000] outline-none"
               placeholder="+1 (242) 555-5678"
             />
           </div>
@@ -223,7 +223,7 @@ export default function NewListingPage() {
                 onClick={() => setForm({ ...form, tier: tier.value })}
                 className={`px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all ${
                   form.tier === tier.value
-                    ? 'border-[#2ECFDA] bg-cyan-50 text-[#2ECFDA]'
+                    ? 'border-[#000000] bg-gray-50 text-[#000000]'
                     : 'border-gray-200 text-gray-600 hover:border-gray-300'
                 }`}
               >

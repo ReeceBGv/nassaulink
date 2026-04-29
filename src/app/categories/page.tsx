@@ -39,15 +39,15 @@ export default async function CategoriesPage() {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#000000] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] flex items-center gap-1">
+            <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#000000] flex items-center gap-1">
               <ArrowLeft size={16} />
               Home
             </Link>
-            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA]">Sign In</Link>
+            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#000000]">Sign In</Link>
           </div>
         </nav>
       </header>
@@ -75,7 +75,7 @@ export default async function CategoriesPage() {
             />
             <button
               type="submit"
-              className="bg-[#2ECFDA] hover:bg-[#289CA6] text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
+              className="bg-[#000000] hover:bg-gray-800 text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
             >
               Search
             </button>
@@ -91,7 +91,7 @@ export default async function CategoriesPage() {
               <Link
                 key={cat.id}
                 href={`/category/${cat.slug}`}
-                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-transparent hover:border-[#2ECFDA] hover:shadow-lg transition-all"
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-transparent hover:border-[#000000] hover:shadow-lg transition-all"
               >
                 {/* Category Image */}
                 {cat.image_url && (
@@ -108,10 +108,10 @@ export default async function CategoriesPage() {
                   </div>
                 )}
                 <div className="p-5">
-                  <h3 className="font-bold text-[#242926] mb-1 group-hover:text-[#2ECFDA] transition-colors">{cat.name}</h3>
+                  <h3 className="font-bold text-[#242926] mb-1 group-hover:text-[#000000] transition-colors">{cat.name}</h3>
                   <p className="text-sm text-gray-400 mb-2">{cat.description || 'Local businesses in Nassau'}</p>
                   <p className="text-sm text-gray-500">{countMap[cat.name] || 0} {countMap[cat.name] === 1 ? 'listing' : 'listings'}</p>
-                  <div className="mt-4 flex items-center text-sm font-medium text-[#2ECFDA] opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="mt-4 flex items-center text-sm font-medium text-[#000000] opacity-0 group-hover:opacity-100 transition-opacity">
                     Browse →
                   </div>
                 </div>

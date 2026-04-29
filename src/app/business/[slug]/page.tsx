@@ -148,10 +148,10 @@ export default async function BusinessPage({ params }: PageProps) {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#000000] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
-          <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] flex items-center gap-1 transition-colors">
+          <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[#000000] flex items-center gap-1 transition-colors">
             <ArrowLeft size={16} />
             Back to Home
           </Link>
@@ -162,9 +162,9 @@ export default async function BusinessPage({ params }: PageProps) {
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2">
-            <li><Link href="/" className="hover:text-[#2ECFDA]">Home</Link></li>
+            <li><Link href="/" className="hover:text-[#000000]">Home</Link></li>
             <li><span className="text-gray-300">/</span></li>
-            <li><Link href={`/category/${listing.category.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-[#2ECFDA]">{listing.category}</Link></li>
+            <li><Link href={`/category/${listing.category.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-[#000000]">{listing.category}</Link></li>
             <li><span className="text-gray-300">/</span></li>
             <li><span className="text-gray-800 font-medium">{listing.name}</span></li>
           </ol>
@@ -193,7 +193,7 @@ export default async function BusinessPage({ params }: PageProps) {
               <span className="text-xs font-bold uppercase px-2.5 py-1 rounded-full bg-gray-900 text-white">
                 Sample Listing
               </span>
-              <span className="text-xs font-medium text-[#2ECFDA] bg-cyan-50 px-2.5 py-1 rounded-full">
+              <span className="text-xs font-medium text-[#000000] bg-gray-50 px-2.5 py-1 rounded-full">
                 {listing.category}
               </span>
             </div>
@@ -225,7 +225,7 @@ export default async function BusinessPage({ params }: PageProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               <a
                 href={`tel:${listing.phone}`}
-                className="flex items-center justify-center gap-2 bg-[#2ECFDA] hover:bg-[#289CA6] text-white font-semibold py-3.5 rounded-xl transition-colors shadow-sm"
+                className="flex items-center justify-center gap-2 bg-[#000000] hover:bg-gray-800 text-white font-semibold py-3.5 rounded-xl transition-colors shadow-sm"
               >
                 <Phone size={18} />
                 Call Now
@@ -248,8 +248,8 @@ export default async function BusinessPage({ params }: PageProps) {
               <h3 className="font-bold text-[#242926] mb-4">Contact Information</h3>
 
               <div className="flex items-center gap-3 text-gray-600">
-                <Phone size={18} className="text-[#2ECFDA] shrink-0" />
-                <a href={`tel:${listing.phone}`} className="hover:text-[#2ECFDA] transition-colors font-medium">
+                <Phone size={18} className="text-[#000000] shrink-0" />
+                <a href={`tel:${listing.phone}`} className="hover:text-[#000000] transition-colors font-medium">
                   {listing.phone}
                 </a>
               </div>
@@ -271,7 +271,7 @@ export default async function BusinessPage({ params }: PageProps) {
               {listing.email && (
                 <div className="flex items-center gap-3 text-gray-600">
                   <Mail size={18} className="text-gray-400 shrink-0" />
-                  <a href={`mailto:${listing.email}`} className="hover:text-[#2ECFDA] transition-colors">
+                  <a href={`mailto:${listing.email}`} className="hover:text-[#000000] transition-colors">
                     {listing.email}
                   </a>
                 </div>
@@ -284,7 +284,7 @@ export default async function BusinessPage({ params }: PageProps) {
                     href={listing.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[#2ECFDA] transition-colors"
+                    className="hover:text-[#000000] transition-colors"
                   >
                     {listing.website.replace(/^https?:\/\//, '')}
                   </a>
@@ -321,7 +321,7 @@ export default async function BusinessPage({ params }: PageProps) {
                 <Link
                   key={item.id}
                   href={`/business/${item.slug}`}
-                  className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all border border-transparent hover:border-[#2ECFDA]"
+                  className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all border border-transparent hover:border-[#000000]"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <span className={`text-xs font-bold uppercase px-2 py-0.5 rounded-full ${

@@ -77,15 +77,15 @@ export default async function CategoryPage({ params }: PageProps) {
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#2ECFDA] flex items-center gap-2">
+          <Link href="/" className="text-xl font-bold text-[#000000] flex items-center gap-2">
             <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/categories" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA] flex items-center gap-1">
+            <Link href="/categories" className="text-sm font-medium text-gray-500 hover:text-[#000000] flex items-center gap-1">
               <ArrowLeft size={16} />
               Categories
             </Link>
-            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#2ECFDA]">Sign In</Link>
+            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-[#000000]">Sign In</Link>
           </div>
         </nav>
       </header>
@@ -94,9 +94,9 @@ export default async function CategoryPage({ params }: PageProps) {
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2">
-            <li><Link href="/" className="hover:text-[#2ECFDA]">Home</Link></li>
+            <li><Link href="/" className="hover:text-[#000000]">Home</Link></li>
             <li><span className="text-gray-300">/</span></li>
-            <li><Link href="/categories" className="hover:text-[#2ECFDA]">Categories</Link></li>
+            <li><Link href="/categories" className="hover:text-[#000000]">Categories</Link></li>
             <li><span className="text-gray-300">/</span></li>
             <li><span className="text-gray-800 font-medium">{category.name}</span></li>
           </ol>
@@ -146,7 +146,7 @@ export default async function CategoryPage({ params }: PageProps) {
                       <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
                         {tier.label}
                       </span>
-                      <span className="text-xs font-medium text-[#2ECFDA] bg-cyan-50 px-2.5 py-1 rounded-full">
+                      <span className="text-xs font-medium text-[#000000] bg-gray-50 px-2.5 py-1 rounded-full">
                         {listing.category}
                       </span>
                     </div>
