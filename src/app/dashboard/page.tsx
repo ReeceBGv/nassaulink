@@ -95,7 +95,7 @@ export default async function DashboardPage() {
         </div>
       ) : (
         <div className="bg-white rounded-xl p-12 text-center shadow-sm border border-gray-100">
-          <img src="/logo.jpg" alt="NassauLink" className="h-8 w-auto rounded-lg mx-auto mb-4" />
+          <img src="/logo.svg" alt="NassauLink" className="h-16 w-auto" />
           <h3 className="text-lg font-bold text-[#1a1a2e] mb-2">No listings yet</h3>
           <p className="text-gray-500 mb-6 max-w-md mx-auto">
             Add your first business listing to get found by Nassau residents searching for what you do.
