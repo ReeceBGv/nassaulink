@@ -93,21 +93,11 @@ export default async function CategoriesPage() {
                 href={`/category/${cat.slug}`}
                 className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-transparent hover:border-[#000000] hover:shadow-lg transition-all"
               >
-                {/* Category Image */}
-                {cat.image_url && (
-                  <div className="relative h-32 w-full overflow-hidden">
-                    <img
-                      src={cat.image_url}
-                      alt={cat.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                    <div className="absolute bottom-2 left-3 text-white text-2xl">
-                      {icon}
-                    </div>
-                  </div>
-                )}
+                {/* Category Icon Only */}
                 <div className="p-5">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-3xl mb-3 bg-gray-50 group-hover:bg-gray-100 transition-colors">
+                    {icon}
+                  </div>
                   <h3 className="font-bold text-[#242926] mb-1 group-hover:text-[#000000] transition-colors">{cat.name}</h3>
                   <p className="text-sm text-gray-400 mb-2">{cat.description || 'Local businesses in Nassau'}</p>
                   <p className="text-sm text-gray-500">{countMap[cat.name] || 0} {countMap[cat.name] === 1 ? 'listing' : 'listings'}</p>
