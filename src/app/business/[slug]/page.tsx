@@ -219,7 +219,9 @@ export default async function BusinessPage({ params }: PageProps) {
               </div>
             )}
 
-            <p className="text-gray-600 text-lg leading-relaxed mb-8">{listing.description}</p>
+            <p className="text-gray-600 text-lg leading-relaxed mb-8">
+              {listing.description?.replace(/!\[.*?\]\(.*?\)/g, '').replace(/\[([^\]]+)\]\(.*?\)/g, '$1').replace(/\*\*/g, '').replace(/__/g, '').replace(/\n/g, ' ')}
+            </p>
 
             {/* Primary CTA Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">

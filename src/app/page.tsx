@@ -178,7 +178,7 @@ export default async function HomePage() {
                   </span>
                 </div>
                 <h3 className="font-bold text-[#242926] text-lg mb-2">{listing.name}</h3>
-                <p className="text-sm text-gray-500 mb-4 line-clamp-2">{listing.description}</p>
+                <p className="text-sm text-gray-500 mb-4 line-clamp-2">{listing.description?.replace(/!\[.*?\]\(.*?\)/g, '').replace(/\[([^\]]+)\]\(.*?\)/g, '$1').replace(/\*\*/g, '').replace(/__/g, '').replace(/\n/g, ' ')}</p>
                 <div className="flex gap-2">
                   <a
                     href={`https://wa.me/${listing.whatsapp?.replace(/\D/g, '')}`}
