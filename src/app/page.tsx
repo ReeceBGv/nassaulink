@@ -45,12 +45,6 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
       {/* Header */}
-      {/* Demo Banner */}
-      <div className="bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
-        🚧 Demo Mode — These are sample listings. Real Nassau businesses coming soon.
-        <Link href="/signup" className="underline ml-1 hover:text-amber-700">Add your business →</Link>
-      </div>
-
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
@@ -149,10 +143,15 @@ export default async function HomePage() {
                 listing.tier === 'premium' ? 'border-[#ff6b4a]' : listing.tier === 'featured' ? 'border-amber-400' : 'border-transparent'
               }`}
             >
-              {/* Demo Badge */}
+              {/* Tier Badge */}
               <div className="absolute top-3 left-3 z-10">
-                <span className="text-xs font-bold uppercase px-2.5 py-1 rounded-full bg-gray-900/70 text-white backdrop-blur-sm">
-                  Sample Listing
+                <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full backdrop-blur-sm ${
+                  listing.tier === 'premium' ? 'bg-red-100 text-red-700' :
+                  listing.tier === 'featured' ? 'bg-amber-100 text-amber-700' :
+                  listing.tier === 'spotlight' ? 'bg-purple-100 text-purple-700' :
+                  'bg-gray-100 text-gray-600'
+                }`}>
+                  {listing.tier}
                 </span>
               </div>
               <div className="relative h-40 w-full overflow-hidden">
