@@ -57,7 +57,8 @@ begin
   new.updated_at = now();
   return new;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public, pg_temp;
 
 drop trigger if exists update_listings_updated_at on listings;
 create trigger update_listings_updated_at
@@ -72,7 +73,8 @@ begin
   values (new.id, new.email);
   return new;
 end;
-$$ language plpgsql security definer;
+$$ language plpgsql security definer
+set search_path = public, pg_temp;
 
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
@@ -158,3 +160,7 @@ on conflict (name) do update set
   icon = excluded.icon,
   description = excluded.description,
   image_url = excluded.image_url;
+
+
+-- Security: Revoke EXECUTE on SECURITY DEFINER functions from public roles
+revoke execute on function handle_new_user() from anon, authenticated, public;
