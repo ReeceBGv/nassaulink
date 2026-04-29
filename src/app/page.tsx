@@ -71,7 +71,7 @@ export default async function HomePage() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="max-w-3xl mx-auto px-6 relative">
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
-            Nassau's Best Kept Secrets,<br /><span className="text-blue-300">Finally Searchable</span>
+            Nassau's Best Kept Secrets,<br /><span className="text-[#2ECFDA]">Finally Searchable</span>
           </h1>
           <p className="text-lg text-blue-100 mb-8 max-w-xl mx-auto">
             The only directory built for how Bahamians actually find local businesses — click, chat, done.
