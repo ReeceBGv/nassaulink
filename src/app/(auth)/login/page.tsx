@@ -33,7 +33,7 @@ export default function LoginPage() {
   return (
     <div className="bg-white rounded-2xl shadow-lg p-8">
       <div className="text-center mb-8">
-          <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
+          <img src="/logo.svg" alt="NassauLink" className="h-16 w-auto" />
         <h1 className="text-2xl font-bold text-[#1a1a2e]">Welcome back</h1>
         <p className="text-gray-500 mt-1">Sign in to manage your listings</p>
       </div>

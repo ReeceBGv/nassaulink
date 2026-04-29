@@ -44,7 +44,7 @@ export default async function ClaimsAdminPage() {
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-[#0066cc] flex items-center gap-2">
-            <img src="/logo.png" alt="NassauLink" className="h-16 w-auto" />
+            <img src="/logo.svg" alt="NassauLink" className="h-16 w-auto" />
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/dashboard" className="text-sm font-medium text-gray-600 hover:text-[#0066cc]">
