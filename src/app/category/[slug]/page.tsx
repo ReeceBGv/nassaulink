@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft, Phone, MessageCircle, MapPin, Star } from 'lucide-react'
 import type { Metadata } from 'next'
 import { getHeroPhoto } from '@/lib/photos'
+import ReviewSection from '@/components/ReviewSection'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -125,82 +126,96 @@ export default async function CategoryPage({ params }: PageProps) {
               const tier = tierConfig[listing.tier as keyof typeof tierConfig] || tierConfig.free
 
               return (
-                <Link
+                <div
                   key={listing.id}
-                  href={`/business/${listing.slug}`}
-                  className={`block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border-2 ${tier.border}`}
+                  className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border-2 ${tier.border}`}
                 >
-                  {/* Card Photo */}
-                  <div className="relative h-40 w-full overflow-hidden">
-                    <Image
-                      src={listing.photos?.[0] || getHeroPhoto(listing.category, listing.category_image_url)}
-                      alt={listing.name}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 400px"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
-                        {tier.label}
-                      </span>
-                      <span className="text-xs font-medium text-[#000000] bg-gray-50 px-2.5 py-1 rounded-full">
-                        {listing.category}
-                      </span>
+                  <Link
+                    href={`/business/${listing.slug}`}
+                    className="block"
+                  >
+                    {/* Card Photo */}
+                    <div className="relative h-40 w-full overflow-hidden">
+                      <Image
+                        src={listing.photos?.[0] || getHeroPhoto(listing.category, listing.category_image_url)}
+                        alt={listing.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 400px"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                     </div>
-
-                    <h3 className="font-bold text-[#242926] text-lg mb-2">{listing.name}</h3>
-                    <p className="text-sm text-gray-500 mb-4 line-clamp-2">{listing.description?.replace(/!\[.*?\]\(.*?\)/g, '').replace(/\[([^\]]+)\]\(.*?\)/g, '$1').replace(/\*\*/g, '').replace(/__/g, '').replace(/\n/g, ' ')}</p>
-
-                    {/* Rating */}
-                    {listing.rating && (
-                      <div className="flex items-center gap-1 mb-3">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className={i < Math.floor(listing.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}
-                          />
-                        ))}
-                        <span className="text-xs font-medium text-gray-600 ml-1">{listing.rating}</span>
-                        {listing.review_count && (
-                          <span className="text-xs text-gray-400">({listing.review_count})</span>
-                        )}
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
+                          {tier.label}
+                        </span>
+                        <span className="text-xs font-medium text-[#000000] bg-gray-50 px-2.5 py-1 rounded-full">
+                          {listing.category}
+                        </span>
                       </div>
-                    )}
 
-                    {/* Address */}
-                    {listing.address && (
-                      <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
-                        <MapPin size={12} />
-                        <span className="line-clamp-1">{listing.address}</span>
-                      </div>
-                    )}
+                      <h3 className="font-bold text-[#242926] text-lg mb-2">{listing.name}</h3>
+                      <p className="text-sm text-gray-500 mb-4 line-clamp-2">{listing.description?.replace(/!\[.*?\]\(.*?\)/g, '').replace(/\[([^\]]+)\]\(.*?\)/g, '$1').replace(/\*\*/g, '').replace(/__/g, '').replace(/\n/g, ' ')}</p>
 
-                    {/* Action Buttons */}
-                    <div className="flex gap-2">
-                      {listing.whatsapp && (
-                        <a
-                          href={`https://wa.me/${listing.whatsapp.replace(/\D/g, '')}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 bg-[#25d366] hover:bg-[#128c7e] text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
-                        >
-                          <MessageCircle size={16} />
-                          WhatsApp
-                        </a>
+                      {/* Rating */}
+                      {listing.rating && (
+                        <div className="flex items-center gap-1 mb-3">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={14}
+                              className={i < Math.floor(listing.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}
+                            />
+                          ))}
+                          <span className="text-xs font-medium text-gray-600 ml-1">{listing.rating}</span>
+                          {listing.review_count && (
+                            <span className="text-xs text-gray-400">({listing.review_count})</span>
+                          )}
+                        </div>
                       )}
-                      <a
-                        href={`tel:${listing.phone}`}
-                        className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
-                      >
-                        <Phone size={16} />
-                      </a>
+
+                      {/* Address */}
+                      {listing.address && (
+                        <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+                          <MapPin size={12} />
+                          <span className="line-clamp-1">{listing.address}</span>
+                        </div>
+                      )}
+
+                      {/* Action Buttons */}
+                      <div className="flex gap-2">
+                        {listing.whatsapp && (
+                          <a
+                            href={`https://wa.me/${listing.whatsapp.replace(/\D/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 bg-[#25d366] hover:bg-[#128c7e] text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MessageCircle size={16} />
+                            WhatsApp
+                          </a>
+                        )}
+                        <a
+                          href={`tel:${listing.phone}`}
+                          className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Phone size={16} />
+                        </a>
+                      </div>
                     </div>
+                  </Link>
+                  
+                  {/* Review Section - Outside Link */}
+                  <div className="px-5 pb-5">
+                    <ReviewSection 
+                      listingId={listing.id} 
+                      listingName={listing.name} 
+                    />
                   </div>
-                </Link>
+                </div>
               )
             })}
           </div>
