@@ -93,7 +93,16 @@ export default async function CategoriesPage() {
                 href={`/category/${cat.slug}`}
                 className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-transparent hover:border-[#000000] hover:shadow-lg transition-all"
               >
-                {/* Category Icon Only */}
+                {/* Category Image */}
+                {cat.image_url && (
+                  <div className="w-full h-32 overflow-hidden">
+                    <img 
+                      src={cat.image_url} 
+                      alt={cat.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
                 <div className="p-5">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-3xl mb-3 bg-gray-50 group-hover:bg-gray-100 transition-colors">
                     {icon}
