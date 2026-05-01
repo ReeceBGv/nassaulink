@@ -50,6 +50,9 @@ export default async function HomePage() {
   const categoryImageMap = new Map(
     categories.map((c) => [c.name, c.image_url])
   )
+  const categoryIconMap = new Map(
+    categories.map((c) => [c.name, c.icon])
+  )
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
@@ -163,15 +166,21 @@ export default async function HomePage() {
                   Sample Listing
                 </span>
               </div>
-              <div className="relative h-40 w-full overflow-hidden">
-                <Image
-                  src={listing.photos?.[0] || getHeroPhoto(listing.category, catImage)}
-                  alt={listing.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 400px"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+              <div className="relative h-40 w-full overflow-hidden flex items-center justify-center bg-gray-50">
+                {['featured', 'premium', 'spotlight'].includes(listing.tier) ? (
+                  <>
+                    <Image
+                      src={listing.photos?.[0] || getHeroPhoto(listing.category, catImage)}
+                      alt={listing.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 400px"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                  </>
+                ) : (
+                  <span className="text-6xl">{categoryIconMap.get(listing.category) || '🏠'}</span>
+                )}
               </div>
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-3">

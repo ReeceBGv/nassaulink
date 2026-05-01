@@ -54,12 +54,15 @@ export default async function SearchPage({ searchParams }: PageProps) {
   // Get categories for filter
   const { data: categories } = await supabase
     .from('categories')
-    .select('name, slug, image_url')
+    .select('name, slug, image_url, icon')
     .order('name')
 
   // Build a lookup map: category name → image_url for fast fallback
   const categoryImageMap = new Map(
     (categories || []).map((c) => [c.name, c.image_url])
+  )
+  const categoryIconMap = new Map(
+    (categories || []).map((c) => [c.name, c.icon])
   )
 
   const tierConfig = {
@@ -202,15 +205,21 @@ export default async function SearchPage({ searchParams }: PageProps) {
                       className={`block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border-2 ${tier.border}`}
                     >
                       {/* Card Photo */}
-                      <div className="relative h-44 w-full overflow-hidden">
-                        <Image
-                          src={listing.photos?.[0] || getHeroPhoto(listing.category, categoryImageMap.get(listing.category))}
-                          alt={listing.name}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, 400px"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                      <div className="relative h-44 w-full overflow-hidden flex items-center justify-center bg-gray-50">
+                        {['featured', 'premium', 'spotlight'].includes(listing.tier) ? (
+                          <>
+                            <Image
+                              src={listing.photos?.[0] || getHeroPhoto(listing.category, categoryImageMap.get(listing.category))}
+                              alt={listing.name}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 768px) 100vw, 400px"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                          </>
+                        ) : (
+                          <span className="text-6xl">{categoryIconMap.get(listing.category) || '🏠'}</span>
+                        )}
                         <div className="absolute bottom-3 left-3">
                           <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
                             {tier.label}
