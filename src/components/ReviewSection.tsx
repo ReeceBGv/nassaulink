@@ -29,14 +29,21 @@ export default function ReviewSection({ listingId, listingName }: ReviewSectionP
   const [authorName, setAuthorName] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [loading, setLoading] = useState(true)
-
-  const supabase = createClient()
+  const [supabase, setSupabase] = useState<any>(null)
 
   useEffect(() => {
-    fetchReviews()
-  }, [listingId])
+    setSupabase(createClient())
+  }, [])
+
+  useEffect(() => {
+    if (supabase) {
+      fetchReviews()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listingId, supabase])
 
   async function fetchReviews() {
+    if (!supabase) return
     setLoading(true)
     const { data, error } = await supabase
       .from('reviews')
@@ -53,7 +60,7 @@ export default function ReviewSection({ listingId, listingName }: ReviewSectionP
 
   async function submitReview(e: React.FormEvent) {
     e.preventDefault()
-    if (!content.trim()) return
+    if (!content.trim() || !supabase) return
 
     setSubmitting(true)
     const { error } = await supabase
@@ -64,7 +71,7 @@ export default function ReviewSection({ listingId, listingName }: ReviewSectionP
         title: title.trim() || null,
         content: content.trim(),
         author_name: authorName.trim() || 'Anonymous',
-        status: 'approved' // Auto-approve for demo
+        status: 'approved'
       })
 
     if (!error) {
@@ -79,9 +86,13 @@ export default function ReviewSection({ listingId, listingName }: ReviewSectionP
   }
 
   async function markHelpful(reviewId: string) {
+    if (!supabase) return
+    const review = reviews.find(r => r.id === reviewId)
+    if (!review) return
+
     const { error } = await supabase
       .from('reviews')
-      .update({ helpful_count: reviews.find(r => r.id === reviewId)!.helpful_count + 1 })
+      .update({ helpful_count: review.helpful_count + 1 })
       .eq('id', reviewId)
 
     if (!error) {
