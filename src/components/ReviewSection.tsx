@@ -39,7 +39,6 @@ export default function ReviewSection({ listingId, listingName }: ReviewSectionP
     if (supabase) {
       fetchReviews()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listingId, supabase])
 
   async function fetchReviews() {
@@ -134,7 +133,7 @@ export default function ReviewSection({ listingId, listingName }: ReviewSectionP
                   onMouseLeave={() => setHoverRating(0)}
                   className="text-2xl transition-transform hover:scale-110"
                 >
-                  {star <= (hoverRating || rating) ? '⭐' : '☆'}
+                  {star <= (hoverRating || rating) ? '★' : '☆'}
                 </button>
               ))}
               <span className="ml-2 text-sm text-gray-500 self-center">
@@ -209,7 +208,7 @@ export default function ReviewSection({ listingId, listingName }: ReviewSectionP
                   <div className="flex gap-0.5 mt-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <span key={star} className="text-sm">
-                        {star <= review.rating ? '⭐' : '☆'}
+                        {star <= review.rating ? '★' : '☆'}
                       </span>
                     ))}
                   </div>
