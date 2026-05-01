@@ -43,12 +43,19 @@ export default async function SearchPage({ searchParams }: PageProps) {
 
   // Filter by search query
   const filtered = query
-    ? listings?.filter((l) =>
-        l.name.toLowerCase().includes(query) ||
-        l.description.toLowerCase().includes(query) ||
-        l.category.toLowerCase().includes(query) ||
-        (l.address && l.address.toLowerCase().includes(query))
-      )
+    ? (() => {
+        const words = query.toLowerCase().split(/\s+/).filter(w => w.length > 0)
+        if (words.length === 0) return listings
+        return listings?.filter((l) => {
+          const searchableText = [
+            l.name,
+            l.description,
+            l.category,
+            l.address,
+          ].filter(Boolean).join(' ').toLowerCase()
+          return words.some(word => searchableText.includes(word))
+        })
+      })()
     : listings
 
   // Get categories for filter
