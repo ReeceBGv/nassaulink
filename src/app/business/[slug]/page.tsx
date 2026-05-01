@@ -5,6 +5,7 @@ import { Phone, MessageCircle, Globe, MapPin, Mail, ArrowLeft, Star, Clock, Awar
 import type { Metadata } from 'next'
 import PhotoGallery from '@/components/PhotoGallery'
 import { getPlaceholderPhotos } from '@/lib/photos'
+import BusinessMap from '@/components/BusinessMap'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -61,7 +62,7 @@ export default async function BusinessPage({ params }: PageProps) {
 
   const { data: listing, error } = await supabase
     .from('listings')
-    .select('*')
+    .select('*, latitude, longitude')
     .eq('slug', slug)
     .eq('status', 'approved')
     .single()
@@ -307,6 +308,19 @@ export default async function BusinessPage({ params }: PageProps) {
                   <span>{listing.address}</span>
                 </div>
               )}
+            </div>
+
+            {/* Map Section */}
+            <div className="border-t border-gray-100 pt-6 mt-6">
+              <h3 className="font-bold text-[#242926] mb-4 flex items-center gap-2">
+                <MapPin size={18} className="text-gray-400" />
+                Location
+              </h3>
+              <BusinessMap 
+                lat={listing.latitude} 
+                lng={listing.longitude} 
+                name={listing.name} 
+              />
             </div>
 
             {/* Hours Placeholder */}
