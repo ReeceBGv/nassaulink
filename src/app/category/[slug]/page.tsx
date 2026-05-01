@@ -1,10 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
 import { ArrowLeft, Phone, MessageCircle, MapPin, Star } from 'lucide-react'
 import type { Metadata } from 'next'
-import { getHeroPhoto } from '@/lib/photos'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -12,52 +9,54 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
-
-  const { data: category } = await supabase
-    .from('categories')
-    .select('name')
-    .eq('slug', slug)
-    .single()
-
-  if (!category) {
-    return { title: 'Category Not Found | NassauLink' }
-  }
-
   return {
-    title: `${category.name} in Nassau | NassauLink`,
-    description: `Find the best ${category.name.toLowerCase()} businesses in Nassau and across The Bahamas. Call or WhatsApp directly.`,
+    title: `${slug.replace(/-/g, ' ')} in Nassau | NassauLink`,
+    description: `Find the best ${slug.replace(/-/g, ' ')} businesses in Nassau and across The Bahamas.`,
   }
+}
+
+// Static placeholder data
+const PLACEHOLDER_LISTINGS = [
+  {
+    id: '1',
+    name: 'Sample Business',
+    slug: 'sample-business',
+    category: 'Restaurants',
+    description: 'This is a sample business listing. Real listings coming soon!',
+    address: '123 Bay Street, Nassau',
+    phone: '+1-242-555-0123',
+    whatsapp: '+1-242-555-0123',
+    rating: 4.5,
+    review_count: 12,
+    tier: 'premium',
+    photos: [],
+  },
+  {
+    id: '2',
+    name: 'Another Business',
+    slug: 'another-business',
+    category: 'Restaurants',
+    description: 'Another example business to demonstrate the layout.',
+    address: '456 East Bay Street, Nassau',
+    phone: '+1-242-555-0456',
+    whatsapp: null,
+    rating: 4.0,
+    review_count: 8,
+    tier: 'featured',
+    photos: [],
+  },
+]
+
+const CATEGORY_INFO = {
+  name: 'Restaurants',
+  icon: '🍴',
+  description: 'Restaurants and dining establishments in Nassau and across The Bahamas.',
 }
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
-
-  // Get category info
-  const { data: category } = await supabase
-    .from('categories')
-    .select('id, name, slug, icon, description, image_url')
-    .eq('slug', slug)
-    .single()
-
-  if (!category) {
-    notFound()
-  }
-
-  // Get listings in this category
-  const { data: listings } = await supabase
-    .from('listings')
-    .select('*')
-    .eq('category', category.name)
-    .eq('status', 'approved')
-    .order('tier', { ascending: false })
+  const category = CATEGORY_INFO
+  const listings = PLACEHOLDER_LISTINGS
 
   const tierConfig = {
     spotlight: { border: 'border-purple-400', badge: 'bg-purple-100 text-purple-700', label: 'Spotlight' },
@@ -105,124 +104,99 @@ export default async function CategoryPage({ params }: PageProps) {
         {/* Category Header */}
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-4xl">{category.icon || '🏢'}</span>
+            <span className="text-4xl">{category.icon}</span>
             <h1 className="text-3xl md:text-4xl font-extrabold text-[#242926]">{category.name}</h1>
           </div>
           <p className="text-gray-500 max-w-2xl">
-            {category.description || `Find the best ${category.name.toLowerCase()} businesses in Nassau and across The Bahamas.`}
+            {category.description}
           </p>
           <div className="mt-4 flex items-center gap-4 text-sm text-gray-500">
-            <span>{listings?.length || 0} {listings?.length === 1 ? 'business' : 'businesses'}</span>
+            <span>{listings.length} businesses</span>
             <span className="text-gray-300">•</span>
             <span>Nassau, Bahamas</span>
           </div>
         </div>
 
         {/* Listings Grid */}
-        {listings && listings.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {listings.map((listing) => {
-              const tier = tierConfig[listing.tier as keyof typeof tierConfig] || tierConfig.free
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {listings.map((listing) => {
+            const tier = tierConfig[listing.tier as keyof typeof tierConfig] || tierConfig.free
 
-              return (
-                <div
-                  key={listing.id}
-                  className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border-2 ${tier.border}`}
-                >
-                  <Link
-                    href={`/business/${listing.slug}`}
-                    className="block"
-                  >
-                    {/* Card Photo */}
-                    <div className="relative h-40 w-full overflow-hidden">
-                      <Image
-                        src={listing.photos?.[0] || getHeroPhoto(listing.category, listing.category_image_url)}
-                        alt={listing.name}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 400px"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                    </div>
-                    <div className="p-5">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
-                          {tier.label}
-                        </span>
-                        <span className="text-xs font-medium text-[#000000] bg-gray-50 px-2.5 py-1 rounded-full">
-                          {listing.category}
-                        </span>
-                      </div>
-
-                      <h3 className="font-bold text-[#242926] text-lg mb-2">{listing.name}</h3>
-                      <p className="text-sm text-gray-500 mb-4 line-clamp-2">{listing.description?.replace(/!\[.*?\]\(.*?\)/g, '').replace(/\[([^\]]+)\]\(.*?\)/g, '$1').replace(/\*\*/g, '').replace(/__/g, '').replace(/\n/g, ' ')}</p>
-
-                      {/* Rating */}
-                      {listing.rating && (
-                        <div className="flex items-center gap-1 mb-3">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              size={14}
-                              className={i < Math.floor(listing.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}
-                            />
-                          ))}
-                          <span className="text-xs font-medium text-gray-600 ml-1">{listing.rating}</span>
-                          {listing.review_count && (
-                            <span className="text-xs text-gray-400">({listing.review_count})</span>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Address */}
-                      {listing.address && (
-                        <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
-                          <MapPin size={12} />
-                          <span className="line-clamp-1">{listing.address}</span>
-                        </div>
-                      )}
-
-                      {/* Action Buttons */}
-                      <div className="flex gap-2">
-                        {listing.whatsapp && (
-                          <a
-                            href={`https://wa.me/${listing.whatsapp.replace(/\D/g, '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1 bg-[#25d366] hover:bg-[#128c7e] text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <MessageCircle size={16} />
-                            WhatsApp
-                          </a>
-                        )}
-                        <a
-                          href={`tel:${listing.phone}`}
-                          className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Phone size={16} />
-                        </a>
-                      </div>
-                    </div>
-                  </Link>
+            return (
+              <Link
+                key={listing.id}
+                href={`/business/${listing.slug}`}
+                className={`block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border-2 ${tier.border}`}
+              >
+                {/* Card Photo Placeholder */}
+                <div className="relative h-40 w-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                  <span className="text-6xl">🏪</span>
                 </div>
-              )
-            })}
-          </div>
-        ) : (
-          <div className="text-center py-20 bg-white rounded-2xl">
-            <span className="text-6xl mb-4 block">🔍</span>
-            <h3 className="text-xl font-bold text-gray-700 mb-2">No listings yet</h3>
-            <p className="text-gray-500 mb-6">Be the first to list your {category.name.toLowerCase()} business!</p>
-            <Link
-              href="/signup"
-              className="inline-block bg-[#FAD122] hover:bg-[#DDA917] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
-            >
-              Add Your Business →
-            </Link>
-          </div>
-        )}
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
+                      {tier.label}
+                    </span>
+                    <span className="text-xs font-medium text-[#000000] bg-gray-50 px-2.5 py-1 rounded-full">
+                      {listing.category}
+                    </span>
+                  </div>
+
+                  <h3 className="font-bold text-[#242926] text-lg mb-2">{listing.name}</h3>
+                  <p className="text-sm text-gray-500 mb-4 line-clamp-2">{listing.description}</p>
+
+                  {/* Rating */}
+                  {listing.rating && (
+                    <div className="flex items-center gap-1 mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={14}
+                          className={i < Math.floor(listing.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}
+                        />
+                      ))}
+                      <span className="text-xs font-medium text-gray-600 ml-1">{listing.rating}</span>
+                      {listing.review_count && (
+                        <span className="text-xs text-gray-400">({listing.review_count})</span>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Address */}
+                  {listing.address && (
+                    <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+                      <MapPin size={12} />
+                      <span className="line-clamp-1">{listing.address}</span>
+                    </div>
+                  )}
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-2">
+                    {listing.whatsapp && (
+                      <a
+                        href={`https://wa.me/${listing.whatsapp.replace(/\D/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-[#25d366] hover:bg-[#128c7e] text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <MessageCircle size={16} />
+                        WhatsApp
+                      </a>
+                    )}
+                    <a
+                      href={`tel:${listing.phone}`}
+                      className="w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Phone size={16} />
+                    </a>
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
       </main>
 
       <footer className="bg-white border-t border-gray-100 py-10 text-center text-gray-500 text-sm mt-20">
