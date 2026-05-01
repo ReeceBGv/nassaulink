@@ -4,43 +4,52 @@ import Image from 'next/image'
 import { Search, Phone, MessageCircle } from 'lucide-react'
 import { getHeroPhoto } from '@/lib/photos'
 
+interface Category {
+  id: string
+  name: string
+  slug: string
+  icon: string
+  description: string
+  image_url: string
+}
+
 export default async function HomePage() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null
 
-  const { data: listings } = await supabase
-    .from('listings')
-    .select('*')
-    .eq('status', 'approved')
-    .order('tier', { ascending: false })
-    .limit(6)
+  let listings = []
+  let categories: Category[] = []
+  let stats = { listings: 0, categories: 0 }
 
-  const { data: allListings } = await supabase
-    .from('listings')
-    .select('category')
-    .eq('status', 'approved')
+  if (supabase) {
+    const { data } = await supabase
+      .from('listings')
+      .select('*')
+      .eq('status', 'approved')
+      .order('tier', { ascending: false })
+      .limit(6)
+    listings = data || []
 
-  const { data: categories } = await supabase
-    .from('categories')
-    .select('id, name, slug, icon, description, image_url')
-    .order('name')
+    const { data: allCategories } = await supabase
+      .from('categories')
+      .select('id, name, slug, icon, description, image_url')
+      .order('name')
+    categories = allCategories || []
 
-  // Build a lookup map: category name → image_url for fast fallback
-  const categoryImageMap = new Map(
-    (categories || []).map((c) => [c.name, c.image_url])
-  )
-
-  const { count: totalListings } = await supabase
-    .from('listings')
-    .select('*', { count: 'exact', head: true })
-    .eq('status', 'approved')
-
-  const stats = {
-    listings: totalListings || 0,
-    categories: categories?.length || 0,
+    const { count } = await supabase
+      .from('listings')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'approved')
+    stats = {
+      listings: count || 0,
+      categories: categories.length || 0,
+    }
   }
+
+  const categoryImageMap = new Map(
+    categories.map((c) => [c.name, c.image_url])
+  )
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
@@ -113,7 +122,7 @@ export default async function HomePage() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {(categories || []).slice(0, 6).map((cat) => {
-            const catCount = allListings?.filter(l => l.category === cat.name).length || 0
+            const catCount = listings.filter(l => l.category === cat.name).length || 0
             return (
               <Link
                 key={cat.id}
