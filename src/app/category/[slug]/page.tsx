@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft, Phone, MessageCircle, MapPin, Star } from 'lucide-react'
 import type { Metadata } from 'next'
 import { getHeroPhoto } from '@/lib/photos'
-import ReviewSection from '@/components/ReviewSection'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -207,14 +206,6 @@ export default async function CategoryPage({ params }: PageProps) {
                       </div>
                     </div>
                   </Link>
-                  
-                  {/* Review Section - Outside Link */}
-                  <div className="px-5 pb-5">
-                    <ReviewSection 
-                      listingId={listing.id} 
-                      listingName={listing.name} 
-                    />
-                  </div>
                 </div>
               )
             })}
