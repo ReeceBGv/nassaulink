@@ -179,7 +179,7 @@ export default async function HomePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                   </>
                 ) : (
-                  <span className="text-6xl">{categoryIconMap.get(listing.category) || '🏠'}</span>
+                  <span className="text-6xl">{categoryIconMap.get(listing.category) || '🏢'}</span>
                 )}
               </div>
               <div className="p-5">

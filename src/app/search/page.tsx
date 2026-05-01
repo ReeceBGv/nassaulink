@@ -218,7 +218,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                           </>
                         ) : (
-                          <span className="text-6xl">{categoryIconMap.get(listing.category) || '🏠'}</span>
+                          <span className="text-6xl">{categoryIconMap.get(listing.category) || '🏢'}</span>
                         )}
                         <div className="absolute bottom-3 left-3">
                           <span className={`text-xs font-bold uppercase px-2.5 py-1 rounded-full ${tier.badge}`}>
