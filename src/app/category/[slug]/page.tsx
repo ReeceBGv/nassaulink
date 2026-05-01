@@ -174,7 +174,7 @@ export default async function CategoryPage({ params }: PageProps) {
                   <div className="flex gap-2">
                     {listing.whatsapp && (
                       <a
-                        href={`https://wa.me/${listing.whatsapp.replace(/\D/g, '')}`}
+                        href={`https://wa.me/${String(listing.whatsapp).replace(/\D/g, '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 bg-[#25d366] hover:bg-[#128c7e] text-white text-sm font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors"
