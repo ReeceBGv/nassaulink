@@ -16,10 +16,18 @@ export const dynamic = 'force-dynamic'
 // Generate dynamic metadata for SEO
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  
+  if (!supabaseUrl || !supabaseKey) {
+    return {
+      title: `${slug.replace(/-/g, ' ')} | NassauLink`,
+      description: 'Business listing on NassauLink',
+    }
+  }
+  
+  const supabase = createClient(supabaseUrl, supabaseKey)
 
   const { data: listing } = await supabase
     .from('listings')

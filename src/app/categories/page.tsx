@@ -8,23 +8,31 @@ export const metadata = {
 }
 
 export default async function CategoriesPage() {
-  const supabase = await createClient()
+  let categories: any[] = []
+  let countMap: Record<string, number> = {}
 
-  const { data: categories } = await supabase
-    .from('categories')
-    .select('id, name, slug, icon, image_url, description')
-    .order('name')
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  // Get actual listing counts per category
-  const { data: listings } = await supabase
-    .from('listings')
-    .select('category')
-    .eq('status', 'approved')
+  if (supabaseUrl && supabaseKey) {
+    const supabase = await createClient()
 
-  const countMap: Record<string, number> = {}
-  if (listings) {
-    for (const listing of listings) {
-      countMap[listing.category] = (countMap[listing.category] || 0) + 1
+    const { data } = await supabase
+      .from('categories')
+      .select('id, name, slug, icon, image_url, description')
+      .order('name')
+    categories = data || []
+
+    // Get actual listing counts per category
+    const { data: listings } = await supabase
+      .from('listings')
+      .select('category')
+      .eq('status', 'approved')
+
+    if (listings) {
+      for (const listing of listings) {
+        countMap[listing.category] = (countMap[listing.category] || 0) + 1
+      }
     }
   }
 
