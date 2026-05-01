@@ -9,13 +9,28 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
+  const name = slug.replace(/-/g, ' ')
   return {
-    title: `${slug.replace(/-/g, ' ')} in Nassau | NassauLink`,
-    description: `Find the best ${slug.replace(/-/g, ' ')} businesses in Nassau and across The Bahamas.`,
+    title: `${name} in Nassau | NassauLink`,
+    description: `Find the best ${name} businesses in Nassau and across The Bahamas.`,
   }
 }
 
-// Static placeholder data
+// Category info lookup for demo mode
+const CATEGORY_MAP: Record<string, { name: string; icon: string; description: string }> = {
+  'restaurants': { name: 'Restaurants', icon: '🍴', description: 'Restaurants and dining establishments in Nassau and across The Bahamas.' },
+  'ac-cooling': { name: 'AC & Cooling', icon: '❄️', description: 'Air conditioning and cooling services in Nassau and across The Bahamas.' },
+  'pool-services': { name: 'Pool Services', icon: '🏊', description: 'Pool cleaning and maintenance services in Nassau and across The Bahamas.' },
+  'auto-repair': { name: 'Auto Repair', icon: '🔧', description: 'Auto repair and mechanic services in Nassau and across The Bahamas.' },
+  'landscaping': { name: 'Landscaping', icon: '🌿', description: 'Landscaping and gardening services in Nassau and across The Bahamas.' },
+  'bars-nightlife': { name: 'Bars & Nightlife', icon: '🍸', description: 'Bars and nightlife spots in Nassau and across The Bahamas.' },
+  'spa-wellness': { name: 'Spa & Wellness', icon: '💆', description: 'Spas and wellness centers in Nassau and across The Bahamas.' },
+  'pharmacy': { name: 'Pharmacy', icon: '💊', description: 'Pharmacies and drugstores in Nassau and across The Bahamas.' },
+  'grocery-markets': { name: 'Grocery & Markets', icon: '🛒', description: 'Grocery stores and markets in Nassau and across The Bahamas.' },
+  'cafes': { name: 'Cafes', icon: '☕', description: 'Cafes and coffee shops in Nassau and across The Bahamas.' },
+}
+
+// Generic placeholder listings for demo mode
 const PLACEHOLDER_LISTINGS = [
   {
     id: '1',
@@ -47,23 +62,24 @@ const PLACEHOLDER_LISTINGS = [
   },
 ]
 
-const CATEGORY_INFO = {
-  name: 'Restaurants',
-  icon: '🍴',
-  description: 'Restaurants and dining establishments in Nassau and across The Bahamas.',
+const tierConfig = {
+  spotlight: { border: 'border-purple-400', badge: 'bg-purple-100 text-purple-700', label: 'Spotlight' },
+  premium: { border: 'border-red-400', badge: 'bg-red-100 text-red-700', label: 'Premium' },
+  featured: { border: 'border-amber-400', badge: 'bg-amber-100 text-amber-700', label: 'Featured' },
+  free: { border: 'border-transparent', badge: 'bg-gray-100 text-gray-600', label: 'Free' },
 }
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params
-  const category = CATEGORY_INFO
-  const listings = PLACEHOLDER_LISTINGS
-
-  const tierConfig = {
-    spotlight: { border: 'border-purple-400', badge: 'bg-purple-100 text-purple-700', label: 'Spotlight' },
-    premium: { border: 'border-red-400', badge: 'bg-red-100 text-red-700', label: 'Premium' },
-    featured: { border: 'border-amber-400', badge: 'bg-amber-100 text-amber-700', label: 'Featured' },
-    free: { border: 'border-transparent', badge: 'bg-gray-100 text-gray-600', label: 'Free' },
+  
+  // Look up category info based on slug
+  const category = CATEGORY_MAP[slug] || {
+    name: slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+    icon: '🏢',
+    description: `Find the best ${slug.replace(/-/g, ' ')} businesses in Nassau and across The Bahamas.`,
   }
+  
+  const listings = PLACEHOLDER_LISTINGS
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
