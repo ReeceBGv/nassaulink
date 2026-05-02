@@ -56,11 +56,13 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
-      {/* Demo Banner */}
-      <div className="bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
-        🚧 Demo Mode — These are sample listings. Real Nassau businesses coming soon.
-        <Link href="/signup" className="underline ml-1 hover:text-amber-700">Add your business →</Link>
-      </div>
+      {/* Show warning if Supabase not configured or no data */}
+      {(!supabase || (listings.length === 0 && categories.length === 0)) && (
+        <div className="bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
+          🚧 {supabase ? 'No listings found.' : 'Database connection not configured.'}
+          <Link href="/signup" className="underline ml-1 hover:text-amber-700">Add your business →</Link>
+        </div>
+      )}
 
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">

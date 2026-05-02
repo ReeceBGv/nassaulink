@@ -19,27 +19,29 @@ export async function generateMetadata({ searchParams }: PageProps) {
 export default async function SearchPage({ searchParams }: PageProps) {
   const { q, category: catFilter, tier: tierFilter } = await searchParams
   const query = (q || '').toLowerCase().trim()
+  
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
-
-  // Get all approved listings
-  let dbQuery = supabase
-    .from('listings')
-    .select('*')
-
-
-  if (catFilter) {
-    dbQuery = dbQuery.eq('category', catFilter)
+  // Fetch all listings with optional filters
+  let listings: any[] = []
+  if (supabase) {
+    let dbQuery = supabase
+      .from('listings')
+      .select('*')
+    
+    if (catFilter) {
+      dbQuery = dbQuery.eq('category', catFilter)
+    }
+    
+    if (tierFilter) {
+      dbQuery = dbQuery.eq('tier', tierFilter)
+    }
+    
+    const { data } = await dbQuery.order('tier', { ascending: false })
+    listings = data || []
   }
-
-  if (tierFilter) {
-    dbQuery = dbQuery.eq('tier', tierFilter)
-  }
-
-  const { data: listings } = await dbQuery.order('tier', { ascending: false })
 
   // Filter by search query
   const filtered = query
@@ -81,11 +83,13 @@ export default async function SearchPage({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
-      {/* Demo Banner */}
-      <div className="bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
-        🚧 Demo Mode — These are sample listings. Real Nassau businesses coming soon.
-        <Link href="/signup" className="underline ml-1 hover:text-amber-700">Add your business →</Link>
-      </div>
+      {/* Show warning if Supabase not configured */}
+      {!supabase && (
+        <div className="bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
+          ⚠️ Database connection not configured. Showing limited results.
+          <Link href="/signup" className="underline ml-1 hover:text-amber-700">Add your business →</Link>
+        </div>
+      )}
 
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
