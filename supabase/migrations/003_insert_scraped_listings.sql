@@ -4,7 +4,7 @@
 
 DO $$
 DECLARE
-  placeholder_owner_id uuid := '11111111-1111-1111-1111-111111111111'; -- REPLACE with real auth.users id
+  placeholder_owner_id uuid := '32009f45-3c98-4684-a65d-c01a5e1e2397'; -- REPLACE with real auth.users id
 BEGIN
   INSERT INTO listings (
     owner_id, name, slug, category, description, phone, whatsapp, email, website, address, photos, tier, status
