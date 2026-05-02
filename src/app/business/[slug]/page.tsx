@@ -72,7 +72,7 @@ export default async function BusinessPage({ params }: PageProps) {
   // Fetch category image_url separately
   const { data: categoryRow } = await supabase
     .from('categories')
-    .select('image_url')
+    .select('image_url, icon')
     .eq('name', listing.category || '')
     .single()
 
