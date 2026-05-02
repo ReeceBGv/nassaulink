@@ -79,6 +79,7 @@ export default async function BusinessPage({ params }: PageProps) {
     .single()
 
   const categoryImageUrl = categoryRow?.image_url
+  const categoryIcon = categoryRow?.icon || '🏢'
 
   // Fetch related listings from same category
   const { data: related } = await supabase
@@ -181,13 +182,19 @@ export default async function BusinessPage({ params }: PageProps) {
 
         {/* Business Card */}
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          {/* Photo Gallery */}
+          {/* Photo - Image for paid tiers, Emoji for free */}
           <div className="relative">
-            <PhotoGallery 
-              photos={listing.photos?.length > 0 ? listing.photos : getPlaceholderPhotos(listing.category, 3, categoryImageUrl)} 
-              businessName={listing.name}
-              categoryImage={categoryImageUrl}
-            />
+            {['featured', 'premium', 'spotlight'].includes(listing.tier) ? (
+              <PhotoGallery 
+                photos={listing.photos?.length > 0 ? listing.photos : getPlaceholderPhotos(listing.category, 3, categoryImageUrl)} 
+                businessName={listing.name}
+                categoryImage={categoryImageUrl}
+              />
+            ) : (
+              <div className="h-64 w-full flex items-center justify-center bg-gray-50">
+                <span className="text-9xl">{categoryIcon}</span>
+              </div>
+            )}
             {/* Tier Badge */}
             <div className="absolute top-3 right-3 z-10">
               <span className={`text-xs font-bold uppercase px-3 py-1.5 rounded-full ${tier.bg} ${tier.text}`}>
