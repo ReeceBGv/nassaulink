@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Phone, MessageCircle, Globe, MapPin, Mail, ArrowLeft, Star, Clock, Award } from 'lucide-react'
@@ -18,22 +18,13 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  
-  if (!supabaseUrl || !supabaseKey) {
-    return {
-      title: `${slug.replace(/-/g, ' ')} | NassauLink`,
-      description: 'Business listing on NassauLink',
-    }
-  }
-  
-  const supabase = createClient(supabaseUrl, supabaseKey)
+  const supabase = await createClient()
 
   const { data: listing } = await supabase
     .from('listings')
     .select('name, description, category, address, phone')
     .eq('slug', slug)
+    .eq('status', 'approved')
     .single()
 
   if (!listing) {
@@ -54,19 +45,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BusinessPage({ params }: PageProps) {
   const { slug } = await params
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   
-  if (!supabaseUrl || !supabaseKey) {
-    notFound()
-  }
-  
-  const supabase = createClient(supabaseUrl, supabaseKey)
+  const supabase = await createClient()
 
   const { data: listing, error } = await supabase
     .from('listings')
     .select('*, latitude, longitude')
     .eq('slug', slug)
+    .eq('status', 'approved')
     .single()
 
   if (error || !listing) {
