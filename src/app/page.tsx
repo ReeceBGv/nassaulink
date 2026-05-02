@@ -26,7 +26,7 @@ export default async function HomePage() {
     const { data } = await supabase
       .from('listings')
       .select('*')
-      .eq('status', 'approved')
+
       .order('tier', { ascending: false })
       .limit(6)
     listings = data || []
@@ -40,7 +40,7 @@ export default async function HomePage() {
     const { count } = await supabase
       .from('listings')
       .select('*', { count: 'exact', head: true })
-      .eq('status', 'approved')
+
     stats = {
       listings: count || 0,
       categories: categories.length || 0,

@@ -27,7 +27,7 @@ export default async function CategoriesPage() {
     const { data: listings } = await supabase
       .from('listings')
       .select('category')
-      .eq('status', 'approved')
+
 
     if (listings) {
       for (const listing of listings) {

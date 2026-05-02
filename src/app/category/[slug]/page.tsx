@@ -60,7 +60,7 @@ export default async function CategoryPage({ params }: PageProps) {
         .from('listings')
         .select('*')
         .eq('category', categoryName)
-        .eq('status', 'approved')
+
         .order('tier', { ascending: false })
       
       if (!error && data && data.length > 0) {

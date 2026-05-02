@@ -29,7 +29,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
   let dbQuery = supabase
     .from('listings')
     .select('*')
-    .eq('status', 'approved')
+
 
   if (catFilter) {
     dbQuery = dbQuery.eq('category', catFilter)

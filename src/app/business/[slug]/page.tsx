@@ -84,7 +84,7 @@ export default async function BusinessPage({ params }: PageProps) {
     .from('listings')
     .select('id, name, slug, category, description, phone, whatsapp, tier')
     .eq('category', listing.category)
-    .eq('status', 'approved')
+
     .neq('id', listing.id)
     .limit(3)
 
