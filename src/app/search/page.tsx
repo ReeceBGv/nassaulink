@@ -61,17 +61,21 @@ export default async function SearchPage({ searchParams }: PageProps) {
     : listings
 
   // Get categories for filter
-  const { data: categories } = await supabase
-    .from('categories')
-    .select('name, slug, image_url, icon')
-    .order('name')
+  let categories: any[] = []
+  if (supabase) {
+    const { data } = await supabase
+      .from('categories')
+      .select('name, slug, image_url, icon')
+      .order('name')
+    categories = data || []
+  }
 
   // Build a lookup map: category name → image_url for fast fallback
   const categoryImageMap = new Map(
-    (categories || []).map((c) => [c.name, c.image_url])
+    categories.map((c) => [c.name, c.image_url])
   )
   const categoryIconMap = new Map(
-    (categories || []).map((c) => [c.name, c.icon])
+    categories.map((c) => [c.name, c.icon])
   )
 
   const tierConfig = {

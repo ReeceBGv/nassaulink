@@ -8,12 +8,9 @@ export const metadata = {
 }
 
 export default async function CategoriesPage() {
-  let categories: any[] = []
-  let countMap: Record<string, number> = {}
-
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  const supabase = supabaseUrl && supabaseKey ? createClient() : null
+  const supabase = supabaseUrl && supabaseKey ? await createClient() : null
 
   let categories: any[] = []
   let countMap: Record<string, number> = {}
@@ -35,7 +32,6 @@ export default async function CategoriesPage() {
         countMap[listing.category] = (countMap[listing.category] || 0) + 1
       }
     }
-  }
   }
 
   return (
