@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@supabase/supabase-js'
 import type { Metadata } from 'next'
 
@@ -178,9 +179,22 @@ export default async function CategoryPage({ params }: PageProps) {
                 href={`/business/${listing.slug}`}
                 style={{display: 'block', backgroundColor: 'white', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: `2px solid ${tier.border.includes('purple') ? '#c084fc' : tier.border.includes('red') ? '#f87171' : tier.border.includes('amber') ? '#fbbf24' : 'transparent'}`, transition: 'all 0.2s'}}
               >
-                {/* Card Photo Placeholder with Emoji */}
-                <div style={{height: '160px', width: '100%', backgroundColor: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  <span style={{fontSize: '48px'}}>{icon}</span>
+                {/* Card Photo - Image for paid tiers, Emoji for free */}
+                <div style={{height: '160px', width: '100%', backgroundColor: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden'}}>
+                  {['featured', 'premium', 'spotlight'].includes(listing.tier) ? (
+                    <>
+                      <Image
+                        src={listing.photos?.[0] || getHeroPhoto(listing.category, categoryIcon)}
+                        alt={listing.name}
+                        layout="fill"
+                        objectFit="cover"
+                        unoptimized={true}
+                      />
+                      <div style={{position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.3), transparent)'}} />
+                    </>
+                  ) : (
+                    <span style={{fontSize: '48px'}}>{icon}</span>
+                  )}
                 </div>
                 <div style={{padding: '20px'}}>
                   <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px'}}>
