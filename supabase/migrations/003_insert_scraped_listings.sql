@@ -1,0 +1,56 @@
+-- Migration: Insert 35 deduplicated BahamasLocal listings
+-- Removed 4 duplicates (3x Bahamian Trae, 1x Seahorse duplicate)
+-- Tier rules: featured/premium/spotlight get images, free listings use category emojis
+
+DO $$
+DECLARE
+  placeholder_owner_id uuid := '11111111-1111-1111-1111-111111111111'; -- REPLACE with real auth.users id
+BEGIN
+  INSERT INTO listings (
+    owner_id, name, slug, category, description, phone, whatsapp, email, website, address, photos, tier, status
+  ) VALUES
+    -- FEATURED (5 listings with images)
+    (placeholder_owner_id, 'Bahamas Supply AC Ltd.', 'bahamas-supply-ac-ltd', 'AC & Cooling', 'Authorized dealers for Carrier, Manitowoc, Hobart. UV lights in stock for air quality improvement.', '242-393-6215', NULL, NULL, NULL, 'East Shirley Street', '["https://images.unsplash.com/photo-1631545308772-81a0e0a3a6eb?w=800&q=80"]', 'featured', 'approved'),
+    (placeholder_owner_id, 'ALBREEZE', 'albreeze', 'AC & Cooling', 'Residential/commercial/marine AC & refrigeration. Free installation estimates. "BREEZE TO MAKE YOU FREEZE!"', '242-816-1341', NULL, NULL, NULL, 'Gateway Plaza, Bernard Road', '["https://images.unsplash.com/photo-1631545308772-81a0e0a3a6eb?w=800&q=80"]', 'featured', 'approved'),
+    (placeholder_owner_id, 'Infinite Security Company Ltd', 'infinite-security-company-ltd', 'Home Services', 'Commercial burglar/fire/CCTV systems. Low voltage installations for building sound systems.', '242-357-3459', NULL, NULL, 'http://www.infinitesecure.com/', 'Gladstone Road', '["https://images.unsplash.com/photo-1585700816239-3be66e3e573d?w=800&q=80"]', 'featured', 'approved'),
+    (placeholder_owner_id, 'Elite K9 Work Dogs', 'elite-k9-work-dogs', 'Veterinary', 'Canine behavior modification, basic/advanced obedience, protection work. Mobile service available.', '242-535-7303', NULL, NULL, NULL, 'McKinney Drive (Mobile)', '["https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80"]', 'featured', 'approved'),
+    (placeholder_owner_id, 'Management Reporting Services', 'management-reporting-services', 'Trades & Repairs', 'Financial planning, bookkeeping, and business consulting. 15+ years experience.', '242-432-9330', NULL, NULL, 'https://managementrsbahamas.com/', 'High Vista Close', '["https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80"]', 'featured', 'approved'),
+    
+    -- PREMIUM (5 listings with images)
+    (placeholder_owner_id, 'Seahorse Sailing Adventures', 'seahorse-sailing-adventures', 'Marine Services', 'Catamaran charters: snorkel, sunset dinners, private events. Seahorse I (53ft), II (63ft), III (65ft).', '242-322-4828', NULL, NULL, 'http://www.seahorsesailingadventures.com/', 'Paradise Island Ferry Terminal', '["https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80"]', 'premium', 'approved'),
+    (placeholder_owner_id, 'Bahama Cool', 'bahama-cool', 'AC & Cooling', 'AC sales/installation, commercial refrigeration, indoor air quality systems. Serving Nassau.', '242-823-2665', NULL, NULL, 'https://www.bahamacoolhvac.com/', '678 East Street South', '["https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80"]', 'premium', 'approved'),
+    (placeholder_owner_id, 'AR Security', 'ar-security', 'Home Services', 'Alarm systems, CCTV, 24/7 monitoring for home and business. Powerline Road location.', '242-458-0517', NULL, NULL, NULL, 'Powerline Road', '["https://images.unsplash.com/photo-1585700816239-3be66e3e573d?w=800&q=80"]', 'premium', 'approved'),
+    (placeholder_owner_id, 'Baker Tilly', 'baker-tilly', 'Business & Corporate Consultants', 'Leading accounting and professional services. Traditional accounting, audit, and consulting.', '242-322-7516', NULL, NULL, 'https://www.bakertilly.bs/', '#17 Marlborough Street', '[]', 'premium', 'approved'),
+    (placeholder_owner_id, 'FACS Ltd.', 'facs-ltd', 'Trades & Repairs', 'Forensic accounting, fraud risk management, 15+ years experience. Old Fort Bay Towne Centre.', '242-702-3109', NULL, NULL, 'http://www.facsltd.co/', '#3 Old Fort Bay Towne Centre', '[]', 'premium', 'approved'),
+    
+    -- SPOTLIGHT (5 listings with images)
+    (placeholder_owner_id, 'Walk-In Medical Clinic', 'walk-in-medical-clinic', 'Doctors - Family & General Practice', '7-day walk-in clinic. Adult/pediatric care, X-rays, ultrasound, lab services. No appointment needed.', '242-328-0783', NULL, NULL, 'http://walkinclinicbahamas.com/', '35 Collins Ave', '["https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&q=80"]', 'spotlight', 'approved'),
+    (placeholder_owner_id, 'Ardastra Gardens and Wildlife Conservation Centre', 'ardastra-gardens-wildlife-conservation-centre', 'Veterinary', 'Bahamas largest land animal collection. Admission: Adults $14.75, Children $7.50. Events/weddings.', '242-323-5806', NULL, NULL, 'http://www.ardastra.com/', 'Chippingham', '["https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=800&q=80"]', 'spotlight', 'approved'),
+    (placeholder_owner_id, 'Paradise Air Conditioning Co.', 'paradise-air-conditioning-co', 'AC & Cooling', 'AC installation and repair on East St & Cordeaux Ave. Serving Nassau Bahamas.', '242-601-2625', NULL, NULL, NULL, 'East St & Cordeaux Ave', '[]', 'spotlight', 'approved'),
+    (placeholder_owner_id, 'L and B Distributors', 'l-and-b-distributors', 'Trades & Repairs', 'AC units (9000 BTU to 5Ton), installation, service. Parts: capacitors, compressors, gauges.', '242-603-0032', NULL, NULL, NULL, 'Wulff Road & Montrose Ave', '[]', 'spotlight', 'approved'),
+    (placeholder_owner_id, 'Donald''s Furniture', 'donalds-furniture', 'Bedding Supplies', 'Furniture & Appliance Centre with comprehensive furniture and appliance collection.', '242-322-3875', NULL, NULL, NULL, '6th Terrace Centerville', '[]', 'spotlight', 'approved'),
+    
+    -- FREE (20 listings - no images, use category emojis)
+    (placeholder_owner_id, 'Ulysses Air Conditioning Technician', 'ulysses-air-conditioning-technician', 'AC & Cooling', 'Ductless installation/repair, AC gas refill, refrigerator service. Mobile business.', '242-636-7754', NULL, NULL, NULL, 'Mobile Business', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Paint Suppliers Ltd', 'paint-suppliers-ltd', 'Paint & Paint Supplies', 'Est. 1958. Exclusive dealers for PPG, Devoe, Total Roof Coatings. Shirley Street location.', '242-393-2836', NULL, NULL, NULL, '130 Shirley Street', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Rodney Evans Air-Conditioning & Refrigeration', 'rodney-evans-air-conditioning-refrigeration', 'AC & Cooling', 'AC & refrigeration repair, troubleshooting for all systems. Mobile service.', '242-805-8571', NULL, NULL, NULL, 'Mobile Business', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'JT Enterprises', 'jt-enterprises', 'AC & Cooling', 'Construction and general maintenance specialists. St. James Road location.', '242-454-4148', NULL, NULL, NULL, '#73 St. James Road', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Cartwright''s Appliances Installation and Repairs', 'cartwrights-appliances-installation-repairs', 'Trades & Repairs', 'All major appliance repair: washer, dryer, fridge, stove, AC. 13yrs experience.', '242-557-5755', NULL, NULL, NULL, 'Springfield Drive', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Cold Masters', 'cold-masters', 'Trades & Repairs', 'Refrigerator, freezer, and cooler repairs for all major brands. Stapledon Gardens.', '242-810-1007', NULL, NULL, NULL, 'Stapledon Gardens', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'B. Ingraham & Co.', 'b-ingraham-co', 'Trades & Repairs', 'Chartered accountants and business consultants. Professional services.', '242-464-3777', NULL, NULL, NULL, NULL, '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Lawgical Corporate Services', 'lawgical-corporate-services', 'Trades & Repairs', 'Legal, business, and accounting services by accredited professionals.', '242-376-4244', NULL, NULL, NULL, '#1 Bay Street', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Infinite Tech Solutions', 'infinite-tech-solutions', 'Home Services', 'IT support and home services with a focus on quality and reliability.', '242-393-7006', NULL, NULL, NULL, 'Mackey Street North', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'CCTV Tech', 'cctv-tech', 'Home Services', 'CCTV installation, maintenance, technical service, computer programming. Palmdale.', '242-817-0055', NULL, NULL, NULL, 'Palmdale', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Sure Alarm Systems Ltd', 'sure-alarm-systems-ltd', 'Home Services', 'Ademco home/business alarm systems. Professional installation and service. Village Road.', '242-394-3881', NULL, NULL, NULL, 'Village Road', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'FOCOL - YouTube', 'focol-youtube', 'Home Services', 'Smart pass energy solutions for homes and businesses. Clifton Pier Terminal.', '242-702-3000', NULL, NULL, 'https://focolsmartpass.com/', 'Clifton Pier Terminal', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Security World', 'security-world', 'Home Services', '20+ years in burglar alarms, CCTV, fire systems for commercial/residential.', '242-341-3321', NULL, NULL, NULL, 'Blue Hill Road South', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Rentokil - In2Care Mosquito Trap', 'rentokil-in2care-mosquito-trap', 'Veterinary', 'Pest control and mosquito trap installations. 5th Terrace Centreville.', '242-322-2157', NULL, NULL, 'https://www.rentokil.com/bs/', '5th Terrace Centreville', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Insurance Management (Bahamas) Ltd.', 'insurance-management-bahamas-ltd', 'Insurance', 'Fire, accident, motor, marine, health, and life insurance products.', '242-394-5555', NULL, NULL, 'http://www.insurancemanagementbahamas.com/', 'Rosetta Street East', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Dog''s Best Friend', 'dogs-best-friend', 'Veterinary', 'Basic/advanced obedience, behavior problem fixing, protection work. Mobile service.', '242-815-7107', NULL, NULL, 'http://dogsbestfriend.online/', 'Mobile Business', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Humane Society of Grand Bahama', 'humane-society-grand-bahama', 'Veterinary', 'Non-profit animal rescue since 1968. Animal welfare and adoption services.', '242-727-1390', NULL, NULL, 'http://www.humanesocietygb.org/', 'Coral Road', '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Baark!', 'baark', 'Veterinary', 'Bahamas Alliance for Animal Rights & Kindness. Rescue and adoption services.', '242-427-7729', NULL, NULL, 'http://www.baarkbahamas.com/', NULL, '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Bahamian Trae - Act Out', 'bahamian-trae-act-out', 'Entertainment', 'Local entertainment services and event planning. Creative performances.', '305-677-6594', NULL, NULL, 'http://www.bahamaslocal.com/', NULL, '[]', 'free', 'approved'),
+    (placeholder_owner_id, 'Renzo''s LP Gas Services', 'renzos-lp-gas-services', 'Trades & Repairs', 'LP gas appliance installation, servicing, and repairs. Blue Hill Road South.', '242-361-3845', NULL, NULL, NULL, '#476 Blue Hill Road South', '[]', 'free', 'approved')
+  
+  ON CONFLICT (slug) DO NOTHING; -- Skip duplicates
+END $$;
