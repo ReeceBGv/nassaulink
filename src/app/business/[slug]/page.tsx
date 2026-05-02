@@ -24,7 +24,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .from('listings')
     .select('name, description, category, address, phone')
     .eq('slug', slug)
-    .eq('status', 'approved')
     .single()
 
   if (!listing) {
@@ -52,7 +51,6 @@ export default async function BusinessPage({ params }: PageProps) {
     .from('listings')
     .select('*, latitude, longitude')
     .eq('slug', slug)
-    .eq('status', 'approved')
     .single()
 
   if (error || !listing) {
