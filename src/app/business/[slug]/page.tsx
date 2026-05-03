@@ -49,7 +49,7 @@ export default async function BusinessPage({ params }: PageProps) {
 
   const { data: listing, error } = await supabase
     .from('listings')
-    .select('*, latitude, longitude')
+    .select('*')
     .eq('slug', slug)
     .single()
 
