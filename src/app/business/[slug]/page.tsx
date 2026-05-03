@@ -54,7 +54,17 @@ export default async function BusinessPage({ params }: PageProps) {
     .single()
 
   if (!listing) {
-    console.log('No listing found for slug:', slug, 'Error:', error)
+    return (
+      <div className="min-h-screen bg-[#f5f0e8] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-[#242926] mb-4">Business Not Found</h1>
+          <p className="text-gray-600 mb-4">The business you're looking for doesn't exist or has been removed.</p>
+          <Link href="/" className="text-sm font-medium text-[#000000] hover:underline">
+            ← Back to Home
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   // Fetch category image_url separately
