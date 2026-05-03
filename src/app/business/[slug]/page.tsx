@@ -53,8 +53,8 @@ export default async function BusinessPage({ params }: PageProps) {
     .eq('slug', slug)
     .single()
 
-  if (error || !listing) {
-    notFound()
+  if (!listing) {
+    console.log('No listing found for slug:', slug, 'Error:', error)
   }
 
   // Fetch category image_url separately
