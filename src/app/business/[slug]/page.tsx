@@ -49,16 +49,28 @@ export default async function BusinessPage({ params }: PageProps) {
 
   const { data: listing, error } = await supabase
     .from('listings')
-    .select('*')
+    .select('id, name, slug, category, description, phone, address, whatsapp, email, website, tier')
     .eq('slug', slug)
     .single()
+
+  if (error) {
+    console.error('Supabase error:', error)
+    return (
+      <div className="min-h-screen bg-[#f5f0e8] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-[#242926] mb-4">Database Error</h1>
+          <p className="text-gray-600">{error.message}</p>
+        </div>
+      </div>
+    )
+  }
 
   if (!listing) {
     return (
       <div className="min-h-screen bg-[#f5f0e8] flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-[#242926] mb-4">Business Not Found</h1>
-          <p className="text-gray-600 mb-4">The business you're looking for doesn't exist or has been removed.</p>
+          <p className="text-gray-600 mb-4">The business you're looking for doesn't exist.</p>
           <Link href="/" className="text-sm font-medium text-[#000000] hover:underline">
             ← Back to Home
           </Link>
