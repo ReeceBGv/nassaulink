@@ -151,7 +151,7 @@ export default async function BusinessPage({ params }: PageProps) {
   const tier = tierConfig[listing.tier as keyof typeof tierConfig] || tierConfig.free
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
+    <div className="min-h-screen bg-red-50">  {/* TEST: red bg */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
